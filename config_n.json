@@ -1,0 +1,114 @@
+{
+  "red" : {
+    "value" : "0xFF0000"
+  },
+  "darkred" : {
+    "value" : "0x7F0000"
+  },
+  "orange" : {
+    "value" : "0xFF7F00"
+  },
+  "brown" : {
+    "value" : "0x7F3F00"
+  },
+  "yellow" : {
+    "value" : "0xFFCF00"
+  },
+  "khaki" : {
+    "value" : "0x7F7F00"
+  },
+  "viridian" : {
+    "value" : "0x7FFF00"
+  },
+  "olive" : {
+    "value" : "0x3F7F00"
+  },
+  "green" : {
+    "value" : "0x00FF00"
+  },
+  "darkgreen" : {
+    "value" : "0x007F00"
+  },
+  "turquoise" : {
+    "value" : "0x00FF7F"
+  },
+  "seagreen" : {
+    "value" : "0x007F3F"
+  },
+  "cyan" : {
+    "value" : "0x00FFFF"
+  },
+  "teal" : {
+    "value" : "0x007F7F"
+  },
+  "sky" : {
+    "value" : "0x007FFF"
+  },
+  "navy" : {
+    "value" : "0x004F7F"
+  },
+  "blue" : {
+    "value" : "0x0000FF"
+  },
+  "darkblue" : {
+    "value" : "0x00007F"
+  },
+  "purple" : {
+    "value" : "0x7F00FF"
+  },
+  "indigo" : {
+    "value" : "0x3F007F"
+  },
+  "pink" : {
+    "value" : "0xFF00FF"
+  },
+  "darkmagenta" : {
+    "value" : "0x7F007F"
+  },
+  "magenta" : {
+    "value" : "0xFF007F"
+  },
+  "maroon" : {
+    "value" : "0x7F003F"
+  },
+  "black" : {
+    "value" : 1
+  },
+    "salmon" : {
+      "value": "0xFF7F7F"
+  },
+  "peach" : {
+    "value": "0xFFBF7F"
+},
+"lightgreen" : {
+  "value": "0x7FFF7F"
+},
+"aquamarine" : {
+  "value": "0x7FFFBF"
+},
+"lightcyan" : {
+  "value": "0x7FFFFF"
+},
+"lightsky" : {
+  "value": "0x7FBFFF"
+},
+"lightblue" : {
+  "value": "0x7F7FFF"
+},
+"lightpurple" : {
+  "value": "0xBF7FFF"
+},
+"lightpink" : {
+  "value": "0xFF7FFF"
+},
+"fuchsia" : {
+  "value": "0xFF7FBF"
+},
+"grey" : {
+  "value": "0x9F9F9F"
+},
+"gray" : {
+  "value": "0x9F9F9F"
+}
+
+}

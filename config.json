@@ -1,0 +1,513 @@
+{
+  "pink" : {
+    "name" : "pink",
+    "value" : 16711883
+  },
+  "lightpink": {
+    "name" : "lpink",
+    "value" : 16758465
+  },
+
+  "hotpink" : {
+    "name" : "hpink",
+    "value" : 16738740
+    },
+  "deeppink": {
+    "name" : "dpink",
+    "value" : 16716947
+  },
+  "palevioletred" : {
+    "name" : "pvltred",
+    "value" : 14381203
+    },
+  "mediumvioletred": {
+    "name" : "mvltred",
+    "value" : 13047173
+  },
+  "lightsalmon" : {
+    "name" : "lsalmon",
+    "value" : 16752762
+    },
+  "salmon": {
+    "name" : "salmon",
+    "value" : 16416882
+  },
+  "darksalmon" : {
+    "name" : "dsalmon",
+    "value" : 15308410
+    },
+  "lightcoral" : {
+    "name" : "lcrl",
+    "value" : 15761536
+  },
+  "indianred" : {
+    "name" : "inred",
+    "value" : 13458524
+  },
+  "crimson" : {
+    "name" : "crimson",
+    "value" : 14423100
+  },
+  "firebrick" : {
+    "name" : "fbrck",
+    "value" : 11674146
+  },
+  "darkred" : {
+    "name" : "dred",
+    "value" : 9109504
+  },
+  "red" : {
+    "name" : "red",
+    "value" : 16711680
+  },
+  "orangered" : {
+    "name" : "ored",
+    "value" : 16729344
+  },
+  "tomato" : {
+    "name" : "tmt",
+    "value" : 16737095
+  },
+  "coral" : {
+    "name" : "coral",
+    "value" : 16744272
+  },
+  "darkorange" : {
+    "name" : "dorange",
+    "value" : 16747520
+  },
+  "orange" : {
+    "name" : "orange",
+    "value" : 16753920
+  },
+  "yellow" : {
+    "name" : "yellow",
+    "value" : 16776960
+  },
+  "lightyellow" : {
+    "name" : "lightyellow",
+    "value" : 16777184
+  },
+  "lemonchiffon" : {
+    "name" : "lemonchiffon",
+    "value" : 16775885
+  },
+  "lightgoldenrodyellow" : {
+    "name" : "lightgoldenrodyellow",
+    "value" : 16448210
+  },
+  "papayawhip" : {
+    "name" : "papayawhip",
+    "value" : 16773077
+  },
+  "moccasin" : {
+    "name" : "moccasin",
+    "value" : 16770229
+  },
+  "peachpuff" : {
+    "name" : "peachpuff",
+    "value" : 16767673
+  },
+  "palegoldenrod" : {
+    "name" : "palegoldenrod",
+    "value" : 15657130
+  },
+  "khaki" : {
+    "name" : "khaki",
+    "value" : 15787660
+  },
+  "darkkhaki" : {
+    "name" : "darkkhaki",
+    "value" : 12433259
+  },
+  "gold" : {
+    "name" : "gold",
+    "value" : 16766720
+  },
+  "cornsilk" : {
+    "name" : "cornsilk",
+    "value" : 16775388
+  },
+  "blanchedalmond" : {
+    "name" : "blanchedalmond",
+    "value" : 16772045
+  },
+  "bisque" : {
+    "name" : "bisque",
+    "value" : 16770244
+  },
+  "navajowhite" : {
+    "name" : "navajowhite",
+    "value" : 16768685
+  },
+  "wheat" : {
+    "name" : "wheat",
+    "value" : 16113331
+  },
+  "burlywood" : {
+    "name" : "burlywood",
+    "value" : 14596231
+  },
+  "tan" : {
+    "name" : "tan",
+    "value" : 13808780
+  },
+  "rosybrown" : {
+    "name" : "rosybrown",
+    "value" : 12357519
+  },
+  "sandybrown" : {
+    "name" : "sandybrown",
+    "value" : 16032864
+  },
+  "goldenrod" : {
+    "name" : "goldenrod",
+    "value" : 14329120
+  },
+  "darkgoldenrod" : {
+    "name" : "darkgoldenrod",
+    "value" : 12092939
+  },
+  "peru" : {
+    "name" : "peru",
+    "value" : 13468991
+  },
+  "chocolate" : {
+    "name" : "chocolate",
+    "value" : 13789470
+  },
+  "saddlebrown" : {
+    "name" : "saddlebrown",
+    "value" : 9127187
+  },
+  "sienna" : {
+    "name" : "sienna",
+    "value" : 10506797
+  },
+  "brown" : {
+    "name" : "brown",
+    "value" : 10824234
+  },
+  "maroon" : {
+    "name" : "maroon",
+    "value" : 8388608
+  },
+  "darkolivegreen" : {
+    "name" : "darkolivegreen",
+    "value" : 5597999
+  },
+  "olive" : {
+    "name" : "olive",
+    "value" : 8421376
+  },
+  "olivedrab" : {
+    "name" : "olivedrab",
+    "value" : 7048739
+  },
+  "yellowgreen" : {
+    "name" : "yellowgreen",
+    "value" : 10145074
+  },
+  "limegreen" : {
+    "name" : "limegreen",
+    "value" : 3329330
+  },
+  "lime" : {
+    "name" : "lime",
+    "value" : 65280
+  },
+  "lawngreen" : {
+    "name" : "lawngreen",
+    "value" : 8190976
+  },
+  "chartreuse" : {
+    "name" : "chartreuse",
+    "value" : 8388352
+  },
+  "greenyellow" : {
+    "name" : "greenyellow",
+    "value" : 11403055
+  },
+  "springgreen" : {
+    "name" : "springgreen",
+    "value" : 65407
+  },
+  "mediumspringgreen" : {
+    "name" : "mediumspringgreen",
+    "value" : 64154
+  },
+  "lightgreen" : {
+    "name" : "lightgreen",
+    "value" : 9498256
+  },
+  "palegreen" : {
+    "name" : "palegreen",
+    "value" : 10025880
+  },
+  "darkseagreen" : {
+    "name" : "darkseagreen",
+    "value" : 9419919
+  },
+  "mediumaquamarine" : {
+    "name" : "mediumaquamarine",
+    "value" : 6737322
+  },
+  "mediumseagreen" : {
+    "name" : "mediumseagreen",
+    "value" : 3978097
+  },
+  "seagreen" : {
+    "name" : "seagreen",
+    "value" : 3050327
+  },
+  "forestgreen" : {
+    "name" : "forestgreen",
+    "value" : 2263842
+  },
+  "green" : {
+    "name" : "green",
+    "value" : 32768
+  },
+  "darkgreen" : {
+    "name" : "darkgreen",
+    "value" : 25600
+  },
+  "aqua" : {
+
+    "value" : 65535
+  },
+    "cyan" : {
+
+    "value" : 65535
+  },
+    "lightcyan" : {
+
+    "value" : 14745599
+  },
+    "paleturquoise" : {
+
+    "value" : 11529966
+  },
+    "aquamarine" : {
+
+    "value" : 8388564
+  },
+    "turquoise" : {
+
+    "value" : 4251856
+  },
+    "mediumturquoise" : {
+
+    "value" : 4772300
+  },
+    "darkturquoise" : {
+
+    "value" : 52945
+  },
+    "lightseagreen" : {
+
+    "value" : 2142890
+  },
+    "cadetblue" : {
+
+    "value" : 6266528
+  },
+    "darkcyan" : {
+
+    "value" : 35723
+  },
+    "teal" : {
+
+    "value" : 32896
+  },
+  "lightsteelblue" : {
+  "value" : 11584734
+},
+"powderblue" : {
+  "value" : 11591910
+},
+"lightblue" : {
+  "value" : 11393254
+},
+"skyblue" : {
+  "value" : 8900331
+},
+"lightskyblue" : {
+  "value" : 8900346
+},
+"deepskyblue" : {
+  "value" : 49151
+},
+"dodgerblue" : {
+  "value" : 2003199
+},
+
+"cornflowerblue" : {
+  "value" : 6591981
+},
+"steelblue" : {
+  "value" : 4620980
+},
+"royalblue" : {
+  "value" : 4286945
+},
+"blue" : {
+  "value" : 255
+},
+"mediumblue" : {
+  "value" : 205
+},
+"darkblue" : {
+  "value" : 139
+},
+"navy" : {
+  "value" : 128
+},
+"midnightblue" : {
+  "value" : 1644912
+},
+"lavender" : {
+   "value" : 15132410
+  },
+"thistle" : {
+   "value" : 14204888
+  },
+"plum" : {
+   "value" : 14524637
+  },
+"violet" : {
+   "value" : 15631086
+  },
+"orchid" : {
+   "value" : 14315734
+  },
+"fuchsia" : {
+   "value" : 16711935
+  },
+"magenta" : {
+   "value" : 16711935
+  },
+"mediumorchid" : {
+   "value" : 12211667
+  },
+"mediumpurple" : {
+   "value" : 9662683
+  },
+"blueviolet" : {
+   "value" : 9055202
+  },
+"darkviolet" : {
+   "value" : 9699539
+  },
+"darkorchid" : {
+   "value" : 10040012
+  },
+"darkmagenta" : {
+   "value" : 9109643
+  },
+"purple" : {
+   "value" : 8388736
+  },
+"indigo" : {
+   "value" : 4915330
+  },
+"darkslateblue" : {
+   "value" : 4734347
+  },
+"slateblue" : {
+   "value" : 6970061
+  },
+"mediumslateblue" : {
+   "value" : 8087790
+  },
+"white" : {
+   "value" : 16777215
+  },
+"snow" : {
+   "value" : 16775930
+  },
+"honeydew" : {
+   "value" : 15794160
+  },
+"mintcream" : {
+   "value" : 16121850
+  },
+"azure" : {
+   "value" : 15794175
+  },
+"aliceblue" : {
+   "value" : 15792383
+  },
+"ghostwhite" : {
+   "value" : 16316671
+  },
+"whitesmoke" : {
+   "value" : 16119285
+  },
+"seashell" : {
+   "value" : 16774638
+  },
+"beige" : {
+   "value" : 16119260
+  },
+"oldlace" : {
+   "value" : 16643558
+  },
+"floralwhite" : {
+   "value" : 16775920
+  },
+"ivory" : {
+   "value" : 16777200
+  },
+"antiquewhite" : {
+   "value" : 16444375
+  },
+"linen" : {
+   "value" : 16445670
+  },
+"lavenderblush" : {
+   "value" : 16773365
+  },
+"mistyrose" : {
+   "value" : 16770273
+  },
+"gainsboro" : {
+   "value" : 14474460
+  },
+"lightgray" : {
+   "value" : 13882323
+  },
+"silver" : {
+   "value" : 12632256
+  },
+"darkgray" : {
+   "value" : 11119017
+  },
+    "gray" : {
+   "value" : 8421504
+  },
+"dimgray" : {
+   "value" : 6908265
+ },
+"lightslategray" : {
+   "value" : 7833753
+  },
+"slategray" : {
+   "value" : 7372944
+  },
+"darkslategray" : {
+   "value" : 3100495
+  },
+"black" : {
+   "value" : 0
+ },
+ "yurika" : {
+    "value" : 16768309
+  },
+  "haiji" : {
+     "value" : 6645881
+   },
+   "demi" : {
+      "value" : 2627964
+    }
+}
