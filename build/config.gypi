@@ -58,7 +58,6 @@
     "want_separate_host_toolset_mkpeephole": 0,
     "nodedir": "C:\\Users\\Administrator\\.node-gyp\\7.4.0",
     "copy_dev_lib": "true",
-    "standalone_static_library": 1,
-    "GTK_Root": "C:\\GTK"
+    "standalone_static_library": 1
   }
 }
