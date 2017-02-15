@@ -513,33 +513,26 @@ msg.channel.sendMessage("Game not ready yet; sorry!");
   msg.channel.sendMessage(ev);
 },
 'event' : (msg) => {
+ // One line contains 23 letters w/o an i
+ /*
 
+ **/
   let test = msg.content.split(" ").slice(1);
   try{
   var Canvas = require('canvas')
     , Image = Canvas.Image
     , canvas = new Canvas(300, 40)
     , ctx = canvas.getContext('2d');
-
   var img;
-
-
   img = new Image;
-  img.src = (__dirname + '/image/sub_event_waku_001.png');
+  img.src = (__dirname + '/image/1.png');
   ctx.drawImage(img, 0, 0);
-
 
   ctx.fillStyle = 'white';
   ctx.font = '25px Impact';
   ctx.textAlign = "center";
   ctx.fillText(test.join(" "), (canvas.width / 2), ((canvas.height / 2)+10));
-  //let ntest = test.join(" ");
 
-/*  let size = ctx.measureText('fuk dis');
-
-
-  ctx.fillRect(canvas.width - (2.62 * size.width), canvas.height - 75, (size.width), 30);
-**/
   var f = canvas.toBuffer();
   msg.channel.sendFile(f);
 } catch (e) {
