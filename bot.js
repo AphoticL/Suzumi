@@ -519,7 +519,7 @@ msg.channel.sendMessage("Game not ready yet; sorry!");
  **/
     var Canvas = require('canvas')
       , Image = Canvas.Image
-      
+
       , ctx = canvas.getContext('2d');
 
     if (msg.channel.name != 'bot-spam') return msg.channel.sendMessage("You're not allowed to use it here! Go to bot-spam instead.");
@@ -547,26 +547,26 @@ msg.channel.sendMessage("Game not ready yet; sorry!");
       let args = msg.content.split(" ").slice(1);
       var col = args[0];
       let targs = msg.content.split(" ").slice(2).join(" ").split(",");
-      var img = new Image;
+      img = new Image;
       let l = targs.length;
-      var canvas = new Canvas(300, (40 * l));
+      canvas = new Canvas(300, (40 * l));
       switch(l){
           case 2:
               img.src = (__dirname + '/image/2.png');
               // draw
               break;
-          case 2:
+          case 3:
               img.src = (__dirname + '/image/3.png');
               // draw
               break;
-          case 2:
+          case 4:
               img.src = (__dirname + '/image/4.png');
               // draw
               break;
           default:
               return msg.channel.sendMessage('Invalid amount of text!');
-              break;
-       
+              
+
       }
   }
   }
