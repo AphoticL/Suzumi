@@ -517,28 +517,59 @@ msg.channel.sendMessage("Game not ready yet; sorry!");
  /*
 
  **/
+    var Canvas = require('canvas')
+      , Image = Canvas.Image
+      
+      , ctx = canvas.getContext('2d');
+
+    if (msg.channel.name != 'bot-spam') return msg.channel.sendMessage("You're not allowed to use it here! Go to bot-spam instead.");
   let test = msg.content.split(" ").slice(1);
-  try{
-  var Canvas = require('canvas')
-    , Image = Canvas.Image
-    , canvas = new Canvas(300, 40)
-    , ctx = canvas.getContext('2d');
-  var img;
-  img = new Image;
-  img.src = (__dirname + '/image/1.png');
-  ctx.drawImage(img, 0, 0);
+  if (!msg.content.includes(",")){
+      try{
+          var canvas = new Canvas(300, 40);
+          var img;
+          img = new Image;
+          img.src = (__dirname + '/image/1.png');
+          ctx.drawImage(img, 0, 0);
 
-  ctx.fillStyle = 'white';
-  ctx.font = '25px Impact';
-  ctx.textAlign = "center";
-  ctx.fillText(test.join(" "), (canvas.width / 2), ((canvas.height / 2)+10));
+          ctx.fillStyle = 'white';
+          ctx.font = '25px Impact';
+          ctx.textAlign = "center";
+          ctx.fillText(test.join(" "), (canvas.width / 2), ((canvas.height / 2)+10));
 
-  var f = canvas.toBuffer();
-  msg.channel.sendFile(f);
-} catch (e) {
-  console.log(e);
-}
-}
+          var f = canvas.toBuffer();
+          msg.channel.sendFile(f);
+      } catch (e) {
+          console.log(e);
+      }
+  }
+  else {
+      let args = msg.content.split(" ").slice(1);
+      var col = args[0];
+      let targs = msg.content.split(" ").slice(2).join(" ").split(",");
+      var img = new Image;
+      let l = targs.length;
+      var canvas = new Canvas(300, (40 * l));
+      switch(l){
+          case 2:
+              img.src = (__dirname + '/image/2.png');
+              // draw
+              break;
+          case 2:
+              img.src = (__dirname + '/image/3.png');
+              // draw
+              break;
+          case 2:
+              img.src = (__dirname + '/image/4.png');
+              // draw
+              break;
+          default:
+              return msg.channel.sendMessage('Invalid amount of text!');
+              break;
+       
+      }
+  }
+  }
 
 };
 
@@ -577,6 +608,10 @@ bot.on('ready', () =>{
 
 });
 
+});
+
+bot.on('guildMemberRemove', (u) => {
+    bot.channels.get('234586311191822336').sendMessage(`${u.user.username} has left the server`).then(console.log(u.user.username));
 });
 bot.login("MjY4NzgwODQ1OTg3Mzk3NjQy.C1fxMA.wRDQDEGSFBLRvALnelqnZszg2PU");
 
