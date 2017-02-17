@@ -604,6 +604,8 @@ msg.channel.sendMessage("Game not ready yet; sorry!");
           default:
               return msg.channel.sendMessage('Invalid Syntax!');
       }
+      f = canvas.toBuffer();
+      msg.channel.sendFile(f);
     } else if (col.toLowerCase() == 'yellow'){
     switch(l){
         case 2:
@@ -634,7 +636,11 @@ msg.channel.sendMessage("Game not ready yet; sorry!");
         default:
             return msg.channel.sendMessage('Invalid Syntax!');
 
-  }} else if (col.toLowerCase() == 'purple'){
+  }
+  f = canvas.toBuffer();
+  msg.channel.sendFile(f);
+}
+   else if (col.toLowerCase() == 'purple'){
   switch(l){
       case 2:
           img.src = (__dirname + '/image/22.png');
@@ -664,9 +670,11 @@ msg.channel.sendMessage("Game not ready yet; sorry!");
       default:
           return msg.channel.sendMessage('Invalid Syntax!');
   }
-}}
   f = canvas.toBuffer();
   msg.channel.sendFile(f);
+}
+}
+
 }};
 
 
