@@ -519,24 +519,41 @@ msg.channel.sendMessage("Game not ready yet; sorry!");
  **/
     var Canvas = require('canvas')
       , Image = Canvas.Image;
-
-
-
     if (msg.channel.name != 'bot-spam') return msg.channel.sendMessage("You're not allowed to use it here! Go to bot-spam instead.");
-  let test = msg.content.split(" ").slice(1);
+    let check = msg.content.split(" ").slice(1)[0];
+    if (!check) return msg.channel.sendMessage("Want to make a sub-event of your own? Use this command followed by the color, then your texts. Be sure to add a comma to separate your words if you want to make a new line!");
+
   if (!msg.content.includes(",")){
       try{
+        var imgdir;
+          let test = msg.content.split(" ").slice(1);
+          let col = test[0];
+          switch(col.toLowerCase()){
+            case 'red':
+              imgdir = '1';
+              break;
+            case 'yellow':
+            imgdir = '11';
+            break;
+            case 'purple':
+            imgdir = '21';
+            break;
+            default:
+            return msg.channel.sendMessage("Invalid Color.");
+          }
+          test = msg.content.split(" ").slice(2);
           var canvas = new Canvas(300, 40);
           var ctx = canvas.getContext('2d');
           var img;
           img = new Image;
-          img.src = (__dirname + '/image/1.png');
+          console.log(`${msg.author.username} sent ${test.join(" ").trim()}`);
+          img.src = (__dirname + '/image/' + imgdir + '.png');
           ctx.drawImage(img, 0, 0);
 
           ctx.fillStyle = 'white';
           ctx.font = '25px Impact';
           ctx.textAlign = "center";
-          ctx.fillText(test.join(" "), (canvas.width / 2), ((canvas.height / 2)+10));
+          ctx.fillText(test.join(" ").trim(), (canvas.width / 2), ((canvas.height / 2)+10));
 
           var f = canvas.toBuffer();
           msg.channel.sendFile(f);
@@ -547,33 +564,110 @@ msg.channel.sendMessage("Game not ready yet; sorry!");
   else {
       let args = msg.content.split(" ").slice(1);
       var col = args[0];
+      if ((col.toLowerCase() !== 'red')&&(col.toLowerCase() !== 'yellow')&&(col.toLowerCase() !== 'purple')) return msg.channel.sendMessage("Invalid Color. You can only use Red, Yellow or Purple.");
       let targs = msg.content.split(" ").slice(2).join(" ").split(",");
       img = new Image;
       let l = targs.length;
       canvas = new Canvas(300, (40 * l));
       ctx = canvas.getContext('2d');
+      ctx.textAlign = "center";
+      ctx.font = '25px Impact';
+      ctx.fillStyle = 'white';
+      if (l.length > 4) return msg.channel.sendMessage("Too much text!");
+      if (col.toLowerCase() == 'red'){
       switch(l){
           case 2:
               img.src = (__dirname + '/image/2.png');
-              // draw
+              ctx.drawImage(img, 0, 0);
+              ctx.fillText(targs[0].trim(), 150, 30);
+              ctx.fillText(targs[1].trim(), 150, 70);
+              console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
               break;
           case 3:
               img.src = (__dirname + '/image/3.png');
-              // draw
+              ctx.drawImage(img, 0, 0);
+              ctx.fillText(targs[0].trim(), 150, 30);
+              ctx.fillText(targs[1].trim(), 150, 70);
+              ctx.fillText(targs[2].trim(), 150, 110);
+              console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
               break;
+
           case 4:
               img.src = (__dirname + '/image/4.png');
-              // draw
+              ctx.drawImage(img, 0, 0);
+              ctx.fillText(targs[0].trim(), 150, 30);
+              ctx.fillText(targs[1].trim(), 150, 70);
+              ctx.fillText(targs[2].trim(), 150, 110);
+              ctx.fillText(targs[3].trim(), 150, 150);
+              console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
               break;
           default:
-              return msg.channel.sendMessage('Invalid amount of text!');
-
-
+              return msg.channel.sendMessage('Invalid Syntax!');
       }
-  }
-  }
+    } else if (col.toLowerCase() == 'yellow'){
+    switch(l){
+        case 2:
+            img.src = (__dirname + '/image/12.png');
+            ctx.drawImage(img, 0, 0);
+            ctx.fillText(targs[0].trim(), 150, 30);
+            ctx.fillText(targs[1].trim(), 150, 70);
+            console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
+            break;
+        case 3:
+            img.src = (__dirname + '/image/13.png');
+            ctx.drawImage(img, 0, 0);
+            ctx.fillText(targs[0].trim(), 150, 30);
+            ctx.fillText(targs[1].trim(), 150, 70);
+            ctx.fillText(targs[2].trim(), 150, 110);
+            console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
+            break;
 
-};
+        case 4:
+            img.src = (__dirname + '/image/14.png');
+            ctx.drawImage(img, 0, 0);
+            ctx.fillText(targs[0].trim(), 150, 30);
+            ctx.fillText(targs[1].trim(), 150, 70);
+            ctx.fillText(targs[2].trim(), 150, 110);
+            ctx.fillText(targs[3].trim(), 150, 150);
+            console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
+            break;
+        default:
+            return msg.channel.sendMessage('Invalid Syntax!');
+
+  }} else if (col.toLowerCase() == 'purple'){
+  switch(l){
+      case 2:
+          img.src = (__dirname + '/image/22.png');
+          ctx.drawImage(img, 0, 0);
+          ctx.fillText(targs[0].trim(), 150, 30);
+          ctx.fillText(targs[1].trim(), 150, 70);
+          console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
+          break;
+      case 3:
+          img.src = (__dirname + '/image/23.png');
+          ctx.drawImage(img, 0, 0);
+          ctx.fillText(targs[0].trim(), 150, 30);
+          ctx.fillText(targs[1].trim(), 150, 70);
+          ctx.fillText(targs[2].trim(), 150, 110);
+          console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
+          break;
+
+      case 4:
+          img.src = (__dirname + '/image/24.png');
+          ctx.drawImage(img, 0, 0);
+          ctx.fillText(targs[0].trim(), 150, 30);
+          ctx.fillText(targs[1].trim(), 150, 70);
+          ctx.fillText(targs[2].trim(), 150, 110);
+          ctx.fillText(targs[3].trim(), 150, 150);
+          console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
+          break;
+      default:
+          return msg.channel.sendMessage('Invalid Syntax!');
+  }
+}}
+  f = canvas.toBuffer();
+  msg.channel.sendFile(f);
+}};
 
 
 bot.on("message", msg => {
