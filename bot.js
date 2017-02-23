@@ -134,7 +134,7 @@ THE FOLLOWING COMMAND IS NOT RELATED TO THE VOICE CHAT COMMANDS:
 /color : "Color your name to perfection."
 /remove : "Wash away your color on command."
 /d : "Pray to RNGsus here."
-/event: "New: Make your own sub-event!"  \`\`\``);
+/event: "New: Make your own sub-event! Syntax: /event [color] [text(,text2,text3,text4)"  \`\`\``);
 },
 'reboot': (msg) => {
   if (msg.author.id == tokens.adminID) process.exit(); //Requires a node module like Forever to work.
@@ -190,6 +190,7 @@ msg.channel.sendMessage(`The list of the paint I got is the following:
   } else {
   try{
   let colre = col.toLowerCase();
+  if (colre === 'grey') colre = 'gray';
 let colvar = parseInt((file[colre]["value"]), 16);
   msg.member.roles.filter( (role) => {
     if(role.name.startsWith("c_")){
@@ -674,8 +675,29 @@ msg.channel.sendMessage("Game not ready yet; sorry!");
   msg.channel.sendFile(f);
 }
 }
+},
+ 'spell' : (msg) => {
+   var Canvas = require('canvas')
+  , image = new Canvas.Image;
 
-}};
+   if (msg.channel.name != 'bot-spam') return msg.channel.sendMessage("You're not allowed to use it here! Go to bot-spam instead.");
+
+   let check = msg.content.split(" ").slice(1)[0];
+   let args = msg.content.split(" ").slice(1);
+   if (!check) return msg.channel.sendMessage(`Want to make a card of your own, ${msg.author}? use [/spell] follow by the name you want! Use sparingly.`);
+   var canvas = new Canvas(255,44);
+   var ctx = canvas.getContext('2d');
+   image.src = (__dirname + '/image/spell.png');
+   ctx.drawImage(image, 0, 0);
+   ctx.textAlign = 'end';
+   ctx.fillStyle = 'white';
+   ctx.font = '12px Arial';
+   // fillText(text, x, y)
+   ctx.fillText(args.join(" "), 238, 29);
+   let f = canvas.toBuffer();
+   msg.channel.sendFile(f);
+ }
+};
 
 
 bot.on("message", msg => {
@@ -685,14 +707,9 @@ bot.on("message", msg => {
 
 });
 
-
-
-
-
 bot.on('ready', () =>{
   console.log("ready");
-  console.log("/switch 148577578146332672");
-  // /switch 148577578146332672
+  console.log("/switch 234586311191822336");  // /switch 148577578146332672
   rl.setPrompt('Suzumi> ');
   rl.prompt();
   rl.on('line', (input) => {
@@ -707,7 +724,6 @@ bot.on('ready', () =>{
     console.log(e);
   }
   }
-
     rl.prompt();
 
 });
