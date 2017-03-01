@@ -24,6 +24,46 @@ let tokens = {
   "speak": 148577578146332672
 };
 
+// STARTUP
+var date = new Date();
+var bdname = "./json/bd.json";
+var bd = require(bdname);
+var bdarr = [];
+
+bot.on('ready', () =>{
+  console.log("ready");
+  var day = date.getDate(),
+		month = date.getMonth() + 1;
+	console.log(`Today is ${day}\/${month}!`);
+	for (var key in bd){
+		if (bd.hasOwnProperty(key)){
+			console.log("Logged " + bd[key]['name']);
+			if ((bd[key]['day'] == day)&&(bd[key]['month'] == month)){
+			console.log(bd[key]['name'] + "'s birthday is today!");
+			bdarr.push(bd[key]['name']);
+			}
+		}
+	}
+  console.log(bdarr.join("\n"));
+  console.log("/switch 234586311191822336");  // /switch 148577578146332672
+  rl.setPrompt('Suzumi> ');
+  rl.prompt();
+  rl.on('line', (input) => {
+    if (input === 'rs') return;
+    if (input.startsWith("/switch")){
+      tokens.speak = input.split("/switch ").slice(1)[0];
+      console.log("Speaking at " + tokens.speak);
+  } else {
+    try {
+    bot.channels.get(`${tokens['speak']}`).sendMessage(`${input}`);
+  } catch(e) {
+    console.log(e);
+  }
+  }
+    rl.prompt();
+});
+});
+// COMMANDS
 const commands = {"play": (msg) => {
   if (queue[msg.guild.id] === undefined) return msg.channel.sendMessage(`Add some songs to the queue first with ${tokens.prefix}add`);
   if (!msg.guild.voiceConnection) return commands.join(msg).then(() => commands.play(msg));
@@ -43,7 +83,6 @@ const commands = {"play": (msg) => {
     let collector = msg.channel.createCollector(m => m);
     collector.on('message', m => {
       if (m.content.startsWith(tokens.prefix + 'pause')) {
-
 msg.channel.sendMessage('It\'s pretty fun; why\'d you pause that..?').then(() => {
   dispatcher.pause();
 });
@@ -134,7 +173,11 @@ THE FOLLOWING COMMAND IS NOT RELATED TO THE VOICE CHAT COMMANDS:
 /color : "Color your name to perfection."
 /remove : "Wash away your color on command."
 /d : "Pray to RNGsus here."
-/event: "New: Make your own sub-event! Syntax: /event [color] [text(,text2,text3,text4)"  \`\`\``);
+/event: "Make your own sub-event! Syntax: /event [color] [text(,text2,text3,text4)"
+/spell: "Make your own card with this!"
+/bd: "Do you want Suzumi to remind you of your birthday? Use this command. Syntax will be listed inside."
+
+NOTE: "If you want a detailed explanation, type /help [command]." << SOON  \`\`\``);
 },
 'reboot': (msg) => {
   if (msg.author.id == tokens.adminID) process.exit(); //Requires a node module like Forever to work.
@@ -696,9 +739,60 @@ msg.channel.sendMessage("Game not ready yet; sorry!");
    ctx.fillText(args.join(" "), 238, 29);
    let f = canvas.toBuffer();
    msg.channel.sendFile(f);
- }
-};
+ },
+ 'bd': (msg) => {
+   console.log("Command");
+   var day = date.getDate(), month = date.getMonth() + 1;
+   let args = msg.content.split(" ").slice(1);
+   if (args[0] === undefined) return msg.channel.sendMessage(`\`\`\`xl
+LIST OF BIRTHDAY COMMANDS:
+add: "Add your birthday to make Suzumi remind you of your birthday."
+Syntax: /bd add dd/mm
+check: "Check if anyone got a birthday today!"
+Syntax: /bd check \`\`\``);
+  if (args[0] == 'add'){
+    console.log(args[1]);
+    if (!args[1]) return msg.channel.sendMessage("Please include your date in dd/mm format");
+    let date = args[1].split("/");
+    console.log(msg.author.username);
+    let name = msg.author.username;
+    var bd = require(bdname);
+    Object.defineProperty(bd, name, {
+  value: {
+    'name' : name,
+    'day': date[0],
+    'month': date[1]
+  },
+  writable: true,
+  enumerable: true,
+  configurable: true
+});
+    fs.writeFile(bdname, JSON.stringify(bd, null, 2), (err) => {
+      if (err) throw err;
+      console.log(JSON.stringify(bd, null, 2));
+      msg.channel.sendMessage("Added!");
+    });
+  }else if (args[0] == 'check'){
+    var arr = [];
+    bd = require(bdname);
+    for (var key in bd){
+      if (bd.hasOwnProperty(key)){
+        if (((Math.abs(bd[key]['day']) - day) < 10) && ((Math.abs(bd[key]['month']) - month) == 0)){
+          if ((Math.abs(bd[key]['day']) - day) == 0){
+            let a = ((Math.abs(bd[key]['day']) - day));
+            arr.push(`It's ${bd[key]['name']}'s birthday today!`);
+        }else{
+          let a = ((Math.abs(bd[key]['day']) - day));
+          arr.push(`It's going to be ${bd[key]['name']}'s birthday in ${a} day(s)`);
+        }
+      }
+    }
+  }
 
+  msg.channel.sendMessage("\`\`\`xl\n" + arr.join("\n") + "\`\`\`");
+ }
+}
+};
 
 bot.on("message", msg => {
   if(!msg.content.startsWith(prefix)) return;
@@ -707,32 +801,9 @@ bot.on("message", msg => {
 
 });
 
-bot.on('ready', () =>{
-  console.log("ready");
-  console.log("/switch 234586311191822336");  // /switch 148577578146332672
-  rl.setPrompt('Suzumi> ');
-  rl.prompt();
-  rl.on('line', (input) => {
-    if (input === 'rs') return;
-    if (input.startsWith("/switch")){
-      tokens.speak = input.split("/switch ").slice(1)[0];
-      console.log("Speaking at " + tokens.speak);
-  } else {
-    try {
-    bot.channels.get(`${tokens['speak']}`).sendMessage(`${input}`);
-  } catch(e) {
-    console.log(e);
-  }
-  }
-    rl.prompt();
-
-});
-
-});
-
-bot.on('guildMemberRemove', (u) => {
+/*bot.on('guildMemberRemove', (u) => {
     bot.channels.get('234586311191822336').sendMessage(`${u.user.username} has left the server`).then(console.log(u.user.username));
-});
+});*/
 bot.login("MjY4NzgwODQ1OTg3Mzk3NjQy.C1fxMA.wRDQDEGSFBLRvALnelqnZszg2PU");
 
 function isInt(value) {

@@ -1,212 +1,34 @@
 0 info it worked if it ends with ok
 1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
 1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
-1 verbose cli   'i',
-1 verbose cli   'Automattic/canvas' ]
+1 verbose cli   'start' ]
 2 info using npm@4.0.5
 3 info using node@v7.4.0
-4 silly loadCurrentTree Starting
-5 silly install loadCurrentTree
-6 silly install readLocalPackageData
-7 silly fetchPackageMetaData Automattic/canvas
-8 silly fetchOtherPackageData Automattic/canvas
-9 silly cache add args [ 'Automattic/canvas', null ]
-10 verbose cache add spec Automattic/canvas
-11 silly cache add parsed spec Result {
-11 silly cache add   raw: 'Automattic/canvas',
-11 silly cache add   scope: null,
-11 silly cache add   escapedName: null,
-11 silly cache add   name: null,
-11 silly cache add   rawSpec: 'Automattic/canvas',
-11 silly cache add   spec: 'github:automattic/canvas',
-11 silly cache add   type: 'hosted',
-11 silly cache add   hosted:
-11 silly cache add    { type: 'github',
-11 silly cache add      ssh: 'git@github.com:automattic/canvas.git',
-11 silly cache add      sshUrl: 'git+ssh://git@github.com/automattic/canvas.git',
-11 silly cache add      httpsUrl: 'git+https://github.com/automattic/canvas.git',
-11 silly cache add      gitUrl: 'git://github.com/automattic/canvas.git',
-11 silly cache add      shortcut: 'github:automattic/canvas',
-11 silly cache add      directUrl: 'https://raw.githubusercontent.com/automattic/canvas/master/package.json' } }
-12 verbose addRemoteGit caching Automattic/canvas
-13 verbose addRemoteGit automattic/canvas is a repository hosted by github
-14 silly tryGitProto attempting to clone git://github.com/automattic/canvas.git
-15 silly tryClone cloning automattic/canvas via git://github.com/automattic/canvas.git
-16 verbose tryClone git-github-com-automattic-canvas-git-67fdb4e5 not in flight; caching
-17 verbose correctMkdir C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes correctMkdir not in flight; initializing
-18 info git [ 'config', '--get', 'remote.origin.url' ]
-19 warn addRemoteGit Error: Command failed: git -c core.longpaths=true config --get remote.origin.url
-19 warn addRemoteGit
-19 warn addRemoteGit     at ChildProcess.exithandler (child_process.js:211:12)
-19 warn addRemoteGit     at emitTwo (events.js:106:13)
-19 warn addRemoteGit     at ChildProcess.emit (events.js:191:7)
-19 warn addRemoteGit     at maybeClose (internal/child_process.js:885:16)
-19 warn addRemoteGit     at Socket.<anonymous> (internal/child_process.js:334:11)
-19 warn addRemoteGit     at emitOne (events.js:96:13)
-19 warn addRemoteGit     at Socket.emit (events.js:188:7)
-19 warn addRemoteGit     at Pipe._handle.close [as _onclose] (net.js:501:12)
-19 warn addRemoteGit  automattic/canvas resetting remote C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-67fdb4e5 because of error: { Error: Command failed: git -c core.longpaths=true config --get remote.origin.url
-19 warn addRemoteGit
-19 warn addRemoteGit     at ChildProcess.exithandler (child_process.js:211:12)
-19 warn addRemoteGit     at emitTwo (events.js:106:13)
-19 warn addRemoteGit     at ChildProcess.emit (events.js:191:7)
-19 warn addRemoteGit     at maybeClose (internal/child_process.js:885:16)
-19 warn addRemoteGit     at Socket.<anonymous> (internal/child_process.js:334:11)
-19 warn addRemoteGit     at emitOne (events.js:96:13)
-19 warn addRemoteGit     at Socket.emit (events.js:188:7)
-19 warn addRemoteGit     at Pipe._handle.close [as _onclose] (net.js:501:12)
-19 warn addRemoteGit   killed: false,
-19 warn addRemoteGit   code: 1,
-19 warn addRemoteGit   signal: null,
-19 warn addRemoteGit   cmd: 'git -c core.longpaths=true config --get remote.origin.url' }
-20 info resetRemote resetting C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-67fdb4e5 for automattic/canvas
-21 silly gentlyRm C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-67fdb4e5 is being purged
-22 verbose gentlyRm don't care about contents; nuking C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-67fdb4e5
-23 silly vacuum-fs purging C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-67fdb4e5
-24 silly vacuum-fs quitting because other entries in C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes
-25 info git [ 'clone',
-25 info git   '--template=C:\\Users\\Administrator\\AppData\\Roaming\\npm-cache\\_git-remotes\\_templates',
-25 info git   '--mirror',
-25 info git   'git://github.com/automattic/canvas.git',
-25 info git   'C:\\Users\\Administrator\\AppData\\Roaming\\npm-cache\\_git-remotes\\git-github-com-automattic-canvas-git-67fdb4e5' ]
-26 error git clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git://github.com/automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-67fdb4e5: Cloning into bare repository 'C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-67fdb4e5'...
-26 error git clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git://github.com/automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-67fdb4e5: fatal: remote error:
-26 error git clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git://github.com/automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-67fdb4e5:   Repository not found.
-27 silly tryHTTPS attempting to clone git+https://github.com/automattic/canvas.git
-28 silly tryClone cloning automattic/canvas via git+https://github.com/automattic/canvas.git
-29 verbose tryClone git-https-github-com-automattic-canvas-git-3289ba44 not in flight; caching
-30 verbose correctMkdir C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes correctMkdir not in flight; initializing
-31 info git [ 'config', '--get', 'remote.origin.url' ]
-32 warn addRemoteGit Error: Command failed: git -c core.longpaths=true config --get remote.origin.url
-32 warn addRemoteGit
-32 warn addRemoteGit     at ChildProcess.exithandler (child_process.js:211:12)
-32 warn addRemoteGit     at emitTwo (events.js:106:13)
-32 warn addRemoteGit     at ChildProcess.emit (events.js:191:7)
-32 warn addRemoteGit     at maybeClose (internal/child_process.js:885:16)
-32 warn addRemoteGit     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
-32 warn addRemoteGit  automattic/canvas resetting remote C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-https-github-com-automattic-canvas-git-3289ba44 because of error: { Error: Command failed: git -c core.longpaths=true config --get remote.origin.url
-32 warn addRemoteGit
-32 warn addRemoteGit     at ChildProcess.exithandler (child_process.js:211:12)
-32 warn addRemoteGit     at emitTwo (events.js:106:13)
-32 warn addRemoteGit     at ChildProcess.emit (events.js:191:7)
-32 warn addRemoteGit     at maybeClose (internal/child_process.js:885:16)
-32 warn addRemoteGit     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
-32 warn addRemoteGit   killed: false,
-32 warn addRemoteGit   code: 1,
-32 warn addRemoteGit   signal: null,
-32 warn addRemoteGit   cmd: 'git -c core.longpaths=true config --get remote.origin.url' }
-33 info resetRemote resetting C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-https-github-com-automattic-canvas-git-3289ba44 for automattic/canvas
-34 silly gentlyRm C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-https-github-com-automattic-canvas-git-3289ba44 is being purged
-35 verbose gentlyRm don't care about contents; nuking C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-https-github-com-automattic-canvas-git-3289ba44
-36 silly vacuum-fs purging C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-https-github-com-automattic-canvas-git-3289ba44
-37 silly vacuum-fs quitting because other entries in C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes
-38 info git [ 'clone',
-38 info git   '--template=C:\\Users\\Administrator\\AppData\\Roaming\\npm-cache\\_git-remotes\\_templates',
-38 info git   '--mirror',
-38 info git   'https://github.com/automattic/canvas.git',
-38 info git   'C:\\Users\\Administrator\\AppData\\Roaming\\npm-cache\\_git-remotes\\git-https-github-com-automattic-canvas-git-3289ba44' ]
-39 error git clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror https://github.com/automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-https-github-com-automattic-canvas-git-3289ba44: Cloning into bare repository 'C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-https-github-com-automattic-canvas-git-3289ba44'...
-39 error git clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror https://github.com/automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-https-github-com-automattic-canvas-git-3289ba44: remote: Repository not found.
-39 error git clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror https://github.com/automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-https-github-com-automattic-canvas-git-3289ba44: fatal: repository 'https://github.com/automattic/canvas.git/' not found
-40 silly trySSH attempting to clone git@github.com:automattic/canvas.git
-41 silly tryClone cloning automattic/canvas via git@github.com:automattic/canvas.git
-42 verbose tryClone git-github-com-automattic-canvas-git-691a3abc not in flight; caching
-43 verbose correctMkdir C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes correctMkdir not in flight; initializing
-44 info git [ 'config', '--get', 'remote.origin.url' ]
-45 warn addRemoteGit Error: Command failed: git -c core.longpaths=true config --get remote.origin.url
-45 warn addRemoteGit
-45 warn addRemoteGit     at ChildProcess.exithandler (child_process.js:211:12)
-45 warn addRemoteGit     at emitTwo (events.js:106:13)
-45 warn addRemoteGit     at ChildProcess.emit (events.js:191:7)
-45 warn addRemoteGit     at maybeClose (internal/child_process.js:885:16)
-45 warn addRemoteGit     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
-45 warn addRemoteGit  automattic/canvas resetting remote C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc because of error: { Error: Command failed: git -c core.longpaths=true config --get remote.origin.url
-45 warn addRemoteGit
-45 warn addRemoteGit     at ChildProcess.exithandler (child_process.js:211:12)
-45 warn addRemoteGit     at emitTwo (events.js:106:13)
-45 warn addRemoteGit     at ChildProcess.emit (events.js:191:7)
-45 warn addRemoteGit     at maybeClose (internal/child_process.js:885:16)
-45 warn addRemoteGit     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
-45 warn addRemoteGit   killed: false,
-45 warn addRemoteGit   code: 1,
-45 warn addRemoteGit   signal: null,
-45 warn addRemoteGit   cmd: 'git -c core.longpaths=true config --get remote.origin.url' }
-46 info resetRemote resetting C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc for automattic/canvas
-47 silly gentlyRm C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc is being purged
-48 verbose gentlyRm don't care about contents; nuking C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc
-49 silly vacuum-fs purging C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc
-50 silly vacuum-fs quitting because other entries in C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes
-51 info git [ 'clone',
-51 info git   '--template=C:\\Users\\Administrator\\AppData\\Roaming\\npm-cache\\_git-remotes\\_templates',
-51 info git   '--mirror',
-51 info git   'git@github.com:automattic/canvas.git',
-51 info git   'C:\\Users\\Administrator\\AppData\\Roaming\\npm-cache\\_git-remotes\\git-github-com-automattic-canvas-git-691a3abc' ]
-52 error git clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc: Cloning into bare repository 'C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc'...
-52 error git clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc: Permission denied (publickey).
-52 error git clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc: fatal: Could not read from remote repository.
-52 error git clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc:
-52 error git clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc: Please make sure you have the correct access rights
-52 error git clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc: and the repository exists.
-53 silly fetchPackageMetaData Error: Command failed: git -c core.longpaths=true clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc
-53 silly fetchPackageMetaData Cloning into bare repository 'C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc'...
-53 silly fetchPackageMetaData Permission denied (publickey).
-53 silly fetchPackageMetaData fatal: Could not read from remote repository.
-53 silly fetchPackageMetaData
-53 silly fetchPackageMetaData Please make sure you have the correct access rights
-53 silly fetchPackageMetaData and the repository exists.
-53 silly fetchPackageMetaData
-53 silly fetchPackageMetaData     at ChildProcess.exithandler (child_process.js:211:12)
-53 silly fetchPackageMetaData     at emitTwo (events.js:106:13)
-53 silly fetchPackageMetaData     at ChildProcess.emit (events.js:191:7)
-53 silly fetchPackageMetaData     at maybeClose (internal/child_process.js:885:16)
-53 silly fetchPackageMetaData     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
-53 silly fetchPackageMetaData  error for Automattic/canvas { Error: Command failed: git -c core.longpaths=true clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc
-53 silly fetchPackageMetaData Cloning into bare repository 'C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc'...
-53 silly fetchPackageMetaData Permission denied (publickey).
-53 silly fetchPackageMetaData fatal: Could not read from remote repository.
-53 silly fetchPackageMetaData
-53 silly fetchPackageMetaData Please make sure you have the correct access rights
-53 silly fetchPackageMetaData and the repository exists.
-53 silly fetchPackageMetaData
-53 silly fetchPackageMetaData     at ChildProcess.exithandler (child_process.js:211:12)
-53 silly fetchPackageMetaData     at emitTwo (events.js:106:13)
-53 silly fetchPackageMetaData     at ChildProcess.emit (events.js:191:7)
-53 silly fetchPackageMetaData     at maybeClose (internal/child_process.js:885:16)
-53 silly fetchPackageMetaData     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
-53 silly fetchPackageMetaData   killed: false,
-53 silly fetchPackageMetaData   code: 128,
-53 silly fetchPackageMetaData   signal: null,
-53 silly fetchPackageMetaData   cmd: 'git -c core.longpaths=true clone --template=C:\\Users\\Administrator\\AppData\\Roaming\\npm-cache\\_git-remotes\\_templates --mirror git@github.com:automattic/canvas.git C:\\Users\\Administrator\\AppData\\Roaming\\npm-cache\\_git-remotes\\git-github-com-automattic-canvas-git-691a3abc' }
-54 silly rollbackFailedOptional Starting
-55 silly rollbackFailedOptional Finishing
-56 silly runTopLevelLifecycles Finishing
-57 silly install printInstalled
-58 verbose stack Error: Command failed: git -c core.longpaths=true clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc
-58 verbose stack Cloning into bare repository 'C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc'...
-58 verbose stack Permission denied (publickey).
-58 verbose stack fatal: Could not read from remote repository.
-58 verbose stack
-58 verbose stack Please make sure you have the correct access rights
-58 verbose stack and the repository exists.
-58 verbose stack
-58 verbose stack     at ChildProcess.exithandler (child_process.js:211:12)
-58 verbose stack     at emitTwo (events.js:106:13)
-58 verbose stack     at ChildProcess.emit (events.js:191:7)
-58 verbose stack     at maybeClose (internal/child_process.js:885:16)
-58 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
-59 verbose cwd C:\Users\Administrator\Documents\GitHub\Suzumi
-60 error Windows_NT 6.1.7601
-61 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "i" "Automattic/canvas"
-62 error node v7.4.0
-63 error npm  v4.0.5
-64 error code 128
-65 error Command failed: git -c core.longpaths=true clone --template=C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\_templates --mirror git@github.com:automattic/canvas.git C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc
-65 error Cloning into bare repository 'C:\Users\Administrator\AppData\Roaming\npm-cache\_git-remotes\git-github-com-automattic-canvas-git-691a3abc'...
-65 error Permission denied (publickey).
-65 error fatal: Could not read from remote repository.
-65 error
-65 error Please make sure you have the correct access rights
-65 error and the repository exists.
-66 error If you need help, you may report this error at:
-66 error     <https://github.com/npm/npm/issues>
-67 verbose exit [ 1, true ]
+4 verbose stack Error: Failed to parse json
+4 verbose stack Trailing comma in object at 5:1
+4 verbose stack }
+4 verbose stack ^
+4 verbose stack     at parseError (C:\Program Files\nodejs\node_modules\npm\node_modules\read-package-json\read-json.js:390:11)
+4 verbose stack     at parseJson (C:\Program Files\nodejs\node_modules\npm\node_modules\read-package-json\read-json.js:79:23)
+4 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-package-json\read-json.js:48:5
+4 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\graceful-fs\graceful-fs.js:78:16
+4 verbose stack     at tryToString (fs.js:426:3)
+4 verbose stack     at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:413:12)
+5 verbose cwd C:\Users\Administrator\Documents\GitHub\Suzumi
+6 error Windows_NT 6.1.7601
+7 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "start"
+8 error node v7.4.0
+9 error npm  v4.0.5
+10 error file C:\Users\Administrator\Documents\GitHub\Suzumi\package.json
+11 error code EJSONPARSE
+12 error Failed to parse json
+12 error Trailing comma in object at 5:1
+12 error }
+12 error ^
+13 error File: C:\Users\Administrator\Documents\GitHub\Suzumi\package.json
+14 error Failed to parse package.json data.
+14 error package.json must be actual JSON, not just JavaScript.
+14 error
+14 error This is not a bug in npm.
+14 error Tell the package author to fix their package.json file. JSON.parse
+15 verbose exit [ 1, true ]
