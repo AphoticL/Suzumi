@@ -11,8 +11,44 @@ const rl = readline.createInterface({
   output: process.stdout,
   prompt: 'Suzumi > '
 });
+const exec = require('child_process').exec;
 var path = require('path');
-
+var colstr = (`"red"
+'darkred'
+'salmon'
+"orange"
+"brown"
+'peach'
+"yellow"
+"khaki"
+"viridian"
+"olive"
+"green"
+"darkgreen"
+'lightgreen'
+"turquoise"
+"seagreen"
+'aquamarine'
+"cyan"
+"teal"
+'lightcyan'
+"sky"
+"navy"
+'lightsky'
+"blue"
+"darkblue"
+'lightblue'
+"purple"
+"indigo"
+'lightpurple'
+"pink"
+"darkmagenta"
+'lightpink'
+"magenta"
+"maroon"
+'fuchsia'
+"black"
+'gray/grey'`);
 /*const objn = ("./gamble.json");
 var obj = require(objn);**/
 /*var players = [];
@@ -29,13 +65,16 @@ var date = new Date();
 var bdname = "./json/bd.json";
 var bd = require(bdname);
 var bdarr = [];
+var d = new Date(2017,0,24);
+var curtime = d.getTime();
 
 bot.on('ready', () =>{
+
   console.log("ready");
   var day = date.getDate(),
 		month = date.getMonth() + 1;
 	console.log(`Today is ${day}\/${month}!`);
-	for (var key in bd){
+	for (let key in bd){
 		if (bd.hasOwnProperty(key)){
 			console.log("Logged " + bd[key]['name']);
 			if ((bd[key]['day'] == day)&&(bd[key]['month'] == month)){
@@ -64,7 +103,67 @@ bot.on('ready', () =>{
 });
 });
 // COMMANDS
-const commands = {"play": (msg) => {
+const commands = {"ping": (msg) => {
+  var start = new Date();
+  msg.channel.sendMessage(`Pong.`);
+  var end = new Date() - start;
+  msg.channel.sendMessage(`\`Took: ${end}ms\``);
+},
+"rs": (msg) => {
+  exec('cd C:\\Users\\Administrator\\Documents\\GitHub\\Suzumi', (error, stdout, stderr) => {
+  if (error) {
+    console.error(`exec error: ${error}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+  console.log(`stderr: ${stderr}`);
+});
+  exec('forever restartall', (error, stdout, stderr) => {
+  if (error) {
+    console.error(`exec error: ${error}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+  console.log(`stderr: ${stderr}`);
+});
+exec('pause', (error, stdout, stderr) => {
+if (error) {
+  console.error(`exec error: ${error}`);
+  return;
+}
+console.log(`stdout: ${stdout}`);
+console.log(`stderr: ${stderr}`);
+});
+},
+"stopall": (msg) => {
+  if (msg.author.id != '197733648403791872') return msg.channel.sendMessage("Forbidden.");
+  exec('cd C:\\Users\\Administrator\\Documents\\GitHub\\Suzumi', (error, stdout, stderr) => {
+  if (error) {
+    console.error(`exec error: ${error}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+  console.log(`stderr: ${stderr}`);
+});
+  exec('forever stopall', (error, stdout, stderr) => {
+  if (error) {
+    console.error(`exec error: ${error}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+  console.log(`stderr: ${stderr}`);
+});
+exec('pause', (error, stdout, stderr) => {
+if (error) {
+  console.error(`exec error: ${error}`);
+  return;
+}
+console.log(`stdout: ${stdout}`);
+console.log(`stderr: ${stderr}`);
+});
+},
+  "play": (msg) => {
+    if (msg.author == bot.user) return;
   if (queue[msg.guild.id] === undefined) return msg.channel.sendMessage(`Add some songs to the queue first with ${tokens.prefix}add`);
   if (!msg.guild.voiceConnection) return commands.join(msg).then(() => commands.play(msg));
   if (queue[msg.guild.id].playing) return msg.channel.sendMessage("Already Playing");
@@ -73,6 +172,11 @@ const commands = {"play": (msg) => {
 
   console.log(queue);
   (function play(song) {
+
+    let arr = msg.member.voiceChannel.members.array();
+    console.log(arr.length-1);
+    if (arr.length-1 < 1) msg.member.voiceChannel.leave();
+
     console.log(song);
     if (song === undefined) return msg.channel.sendMessage("Queue is empty").then(() => {
       queue[msg.guild.id].playing = false;
@@ -83,18 +187,26 @@ const commands = {"play": (msg) => {
     let collector = msg.channel.createCollector(m => m);
     collector.on('message', m => {
       if (m.content.startsWith(tokens.prefix + 'pause')) {
+        if (arr.length-1 < 1) msg.member.voiceChannel.leave();
+        if (msg.author == bot.user) return;
 msg.channel.sendMessage('It\'s pretty fun; why\'d you pause that..?').then(() => {
   dispatcher.pause();
 });
       } else if (m.content.startsWith(tokens.prefix + 'resume')){
+        if (arr.length-1 < 1) msg.member.voiceChannel.leave();
+        if (msg.author == bot.user) return;
 msg.channel.sendMessage('owo)').then(() => {
   dispatcher.resume();
 });
       } else if (m.content.startsWith(tokens.prefix + 'skip')){
+        if (arr.length-1 < 1) msg.member.voiceChannel.leave();
+        if (msg.author == bot.user) return;
 msg.channel.sendMessage('Skipped').then(() => {
   dispatcher.end();
 });
       } else if (m.content.startsWith('/volume')){
+        if (arr.length-1 < 1) msg.member.voiceChannel.leave();
+        if (msg.author == bot.user) return;
         // dispatcher volume * 50 : Actaul value
 
         let args = m.content.split(' ').slice(1);
@@ -106,6 +218,7 @@ msg.channel.sendMessage(`Volume: ${Math.round(dispatcher.volume*50)}%`);
 }
       }
        else if (m.content.startsWith(tokens.prefix + 'time')){
+         if (arr.length-1 < 1) msg.member.voiceChannel.leave();
 msg.channel.sendMessage(`time: ${Math.floor(dispatcher.time / 60000)}:${Math.floor((dispatcher.time % 60000)/1000) <10 ? '0'+Math.floor((dispatcher.time % 60000)/1000) : Math.floor((dispatcher.time % 60000)/1000)}`);
       }
     });
@@ -124,6 +237,7 @@ play(queue[msg.guild.id].songs[0]);
   })(queue[msg.guild.id].songs[0]);
 },
 'join': (msg) => {
+  if (msg.author == bot.user) return;
   return new Promise((resolve, reject) => {
     const voiceChannel = msg.member.voiceChannel;
     if (!voiceChannel || voiceChannel.type !== 'voice') return msg.reply('I couldn\'t connect to your voice channel...');
@@ -131,6 +245,7 @@ play(queue[msg.guild.id].songs[0]);
   });
 },
 'add': (msg) => {
+  if (msg.author == bot.user) return;
   try{
   let url = msg.content.split(' ')[1];
   if (url == '' || url === undefined) return msg.channel.sendMessage(`You must add a url, or youtube video id after ${tokens.prefix}add`);
@@ -151,38 +266,67 @@ play(queue[msg.guild.id].songs[0]);
   queue[msg.guild.id].songs.forEach((song, i) => { tosend.push(`${i+1}. ${song.title} - Requested by: ${song.requester}`);});
   msg.channel.sendMessage(`__**${msg.guild.name}'s Music Queue:**__ Currently **${tosend.length}** songs queued ${(tosend.length > 15 ? '*[Only next 15 shown]*' : '')}\n\`\`\`${tosend.slice(0,15).join('\n')}\`\`\``);
 },
-'help': (msg) => {
-  msg.channel.sendMessage(` \`\`\`xl
-THE FOLLOWING COMMAND IS FOR THE VOICE CHAT COMMANDS
 
+'help': (msg) => {
+  let args = msg.content.split(" ").slice(1),
+  resstr;
+  if (!args[0]) return msg.channel.sendMessage(`\`\`\`xl
+==VOICE CHAT COMMANDS==
+/join
+/add
+/queue
+/play
+/pause
+/resume
+/skip
+/time
+/volume
+
+==NON VC COMMANDS==
+/color or /colour
+/d
+/event
+/spell
+/bd
+(Type /help followed by the command's name for extra data)\`\`\``);
+  // BEGINNING SWITCH SEQ
+  switch(args[0].toLowerCase()){
+    case 'voice':
+      resstr = (`\`\`\`xl
 /join : "Join Voice channel of msg sender"
 /add : "Add a valid youtube link to the queue"
 /queue : "Shows the current queue, up to 15 songs shown."
 /play : "Play the music queue if already joined to a voice channel"
-
-THE FOLLOWING COMMANDS ONLY FUNCTION WHILE THE PLAY COMMAND IS RUNNING:
-
 /pause : "Pauses the music"
 /resume : "Resumes the music"
 /skip : "Skips the playing song"
 /time : "Shows the playtime of the song."
-/volume : "Adjust the intensity of the song."
-
-THE FOLLOWING COMMAND IS NOT RELATED TO THE VOICE CHAT COMMANDS:
-
-/color : "Color your name to perfection."
-/remove : "Wash away your color on command."
-/d : "Pray to RNGsus here."
-/event: "Make your own sub-event! Syntax: /event [color] [text(,text2,text3,text4)"
-/spell: "Make your own card with this!"
-/bd: "Do you want Suzumi to remind you of your birthday? Use this command. Syntax will be listed inside."
-
-NOTE: "If you want a detailed explanation, type /help [command]." << SOON  \`\`\``);
+/volume : "Adjust the intensity of the song."\`\`\``);
+      break;
+    case 'color':
+    case 'colour':
+      resstr = "Type /color or /colour followed by the color you want to change your name's color. I'll inform you if the color you want is not in my store. Type /remove if you desire to wash your color off.";
+      break;
+    case 'd':
+      resstr = "Pray to RNGsus here. Type a certain character's name and see what happens";
+      break;
+    case 'event':
+      resstr = "Make your own sub-event! Syntax: /event [color] [text(,text2,text3,text4)";
+      break;
+    case 'spell':
+      resstr = "Make your own spellcard! Type the name after this command and see what happens!";
+      break;
+    case 'bd':
+      resstr = "Do you want Suzumi to remind you of your birthday? Use this command. Syntax will be listed inside.";
+      break;
+  }
+    msg.channel.sendMessage(resstr);
 },
 'reboot': (msg) => {
   if (msg.author.id == tokens.adminID) process.exit(); //Requires a node module like Forever to work.
 },
 'color' : (msg) => {
+
   var args = msg.content.split(" ").slice(1);
   let col = args[0];
   if (col == null) {
@@ -192,42 +336,8 @@ NOTE: "If you want a detailed explanation, type /help [command]." << SOON  \`\`\
       setTimeout(function(){
 msg.channel.sendMessage(`The list of the paint I got is the following:
   \`\`\`xl
-  "red"
-  'darkred'
-  'salmon'
-  "orange"
-  "brown"
-  'peach'
-  "yellow"
-  "khaki"
-  "viridian"
-  "olive"
-  "green"
-  "darkgreen"
-  'lightgreen'
-  "turquoise"
-  "seagreen"
-  'aquamarine'
-  "cyan"
-  "teal"
-  'lightcyan'
-  "sky"
-  "navy"
-  'lightsky'
-  "blue"
-  "darkblue"
-  'lightblue'
-  "purple"
-  "indigo"
-  'lightpurple'
-  "pink"
-  "darkmagenta"
-  'lightpink'
-  "magenta"
-  "maroon"
-  'fuchsia'
-  "black"
-  'gray/grey'      \`\`\`    `);
+  ${colstr}
+    \`\`\`  `);
       },3000);
     },2000);
   } else {
@@ -239,10 +349,12 @@ let colvar = parseInt((file[colre]["value"]), 16);
     if(role.name.startsWith("c_")){
       msg.member.removeRole(role);
     }});
+
     console.log(`${msg.author.username}`);
     console.log(col);
     console.log(colre);
     console.log(colvar);
+
       if(msg.guild.roles.exists('name', `c_${colre}`))
       msg.guild.roles.filter( role => {
 if(role.name.startsWith(`c_${colre}`)){
@@ -269,42 +381,7 @@ if(role.name.startsWith(`c_${colre}`)){
     if (e != "TypeError: msg.guild.roles.filter(...).then is not a function"){
       msg.channel.sendMessage(`Someone stole my color buckets ;w; So here's the list of the paint I got right now:
 \`\`\`xl
-"red"
-'darkred'
-'salmon'
-"orange"
-"brown"
-'peach'
-"yellow"
-"khaki"
-"viridian"
-"olive"
-"green"
-"darkgreen"
-'lightgreen'
-"turquoise"
-"seagreen"
-'aquamarine'
-"cyan"
-"teal"
-'lightcyan'
-"sky"
-"navy"
-'lightsky'
-"blue"
-"darkblue"
-'lightblue'
-"purple"
-"indigo"
-'lightpurple'
-"pink"
-"darkmagenta"
-'lightpink'
-"magenta"
-"maroon"
-'fuchsia'
-"black"
-'gray/grey'\`\`\`    `);
+${colstr}\`\`\`    `);
   }
 }
 }
@@ -331,42 +408,9 @@ if(role.name.startsWith(`c_${colre}`)){
       setTimeout(function(){
 msg.channel.sendMessage(`The list of the paint I got is the following:
   \`\`\`xl
-  "red"
-  'darkred'
-  'salmon'
-  "orange"
-  "brown"
-  'peach'
-  "yellow"
-  "khaki"
-  "viridian"
-  "olive"
-  "green"
-  "darkgreen"
-  'lightgreen'
-  "turquoise"
-  "seagreen"
-  'aquamarine'
-  "cyan"
-  "teal"
-  'lightcyan'
-  "sky"
-  "navy"
-  'lightsky'
-  "blue"
-  "darkblue"
-  'lightblue'
-  "purple"
-  "indigo"
-  'lightpurple'
-  "pink"
-  "darkmagenta"
-  'lightpink'
-  "magenta"
-  "maroon"
-  'fuchsia'
-  "black"
-  'gray/grey'      \`\`\`    `);
+
+  ${colstr}
+  \`\`\`    `);
       },3000);
     },2000);
   } else {
@@ -407,42 +451,9 @@ if(role.name.startsWith(`c_${colre}`)){
     if (e != "TypeError: msg.guild.roles.filter(...).then is not a function"){
       msg.channel.sendMessage(`Someone stole my color buckets ;w; So here's the list of the paint I got right now:
 \`\`\`xl
-"red"
-'darkred'
-'salmon'
-"orange"
-"brown"
-'peach'
-"yellow"
-"khaki"
-"viridian"
-"olive"
-"green"
-"darkgreen"
-'lightgreen'
-"turquoise"
-"seagreen"
-'aquamarine'
-"cyan"
-"teal"
-'lightcyan'
-"sky"
-"navy"
-'lightsky'
-"blue"
-"darkblue"
-'lightblue'
-"purple"
-"indigo"
-'lightpurple'
-"pink"
-"darkmagenta"
-'lightpink'
-"magenta"
-"maroon"
-'fuchsia'
-"black"
-'gray/grey'\`\`\`    `);
+
+${colstr}
+\`\`\`    `);
   }
 }
 }
@@ -473,7 +484,7 @@ if(role.name.startsWith(`c_${colre}`)){
 } else if (d != "Xeno") {
   let num = Math.floor(Math.random() * (ins.length - 1) + 1);
   msg.channel.sendMessage(ins[num]);
-} else if ((d == "Xeno") && ((args[1] == "a") || args[1] == "A")){
+} else if ((d.toLowerCase() == "xeno") && ((args[1] == "a") || args[1] == "A")){
   msg.channel.sendMessage("Calling out to the god of RNG themselves isn't going to give you any good.");
 }
 }
@@ -483,7 +494,6 @@ if(role.name.startsWith(`c_${colre}`)){
   let args = msg.content.split(" ").slice(1);
   var arr = [];
   for (let i = 0; i < args.length; i++) arr.push(args[i]);
-
 try{
     let res = eval(arr.join(" "));
     msg.channel.sendMessage(res);
@@ -498,63 +508,6 @@ msg.reply(e);
   let args = msg.content.split(" ").slice(1);
 
   msg.channel.sendMessage(`${msg.author.username} >> ${args.join(" ")}`);
-},
- 'math' : (msg) => {
-   let π = Math.PI;
-   let args = msg.content.split(" ").slice(1);
-   var arr = [];
-   for (let i = 0; i < args.length; i++) arr.push(args[i]);
-
- try{
-     let res = eval(arr.join(" "));
-     msg.channel.sendMessage(res);
- } catch (e) {
- msg.reply(e);
- }
- function sin(i) {
-   return Math.sin(i);
- }
- function cos(i) {
-   return Math.cos(i);
- }
- function tan(i) {
-   return Math.tan(i);
- }
- function cosec(i) {
-   return 1 / Math.sin(i);
- }
- function sec(i) {
-   return 1 / Math.cos(i);
- }
- function cot(i) {
-   return 1 / Math.tan(i);
- }
- function sqrt(i){
-   if (i >= 0) return Math.sqrt(i);
-   if ((i < 0)&&(i != -1)) return (Math.sqrt(0-i) + "i");
-   if (i == -1) return "i";
- }
-
- },
-/*'blackjack' : (msg) => {
-  var gameon = false;
-  var cards = ['A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠',
-  'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥',
-  'A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
-  'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
-];
-if (msg.author.nickname === undefined)
-msg.channel.sendMessage(`Game loading...this game will be **${msg.author.username}** against the bot`);
-else if (!msg.author.nickname === undefined)
-msg.channel.sendMessage(`Game loading...this game will be **${msg.author.username}**(${msg.author.nickname}) against the bot`);
-msg.channel.sendMessage("Game not ready yet; sorry!");
-}, **/
-'send' : (msg) => {
-  msg.delete();
-  if (msg.author.id !== ('197733648403791872')) return;
-  let args = msg.content.split("|").slice(1);
-  let ev = args[0];
-  msg.channel.sendMessage(ev);
 },
 'event' : (msg) => {
  // One line contains 23 letters w/o an i
@@ -741,6 +694,7 @@ msg.channel.sendMessage("Game not ready yet; sorry!");
    msg.channel.sendFile(f);
  },
  'bd': (msg) => {
+   var date = new Date();
    console.log("Command");
    var day = date.getDate(), month = date.getMonth() + 1;
    let args = msg.content.split(" ").slice(1);
@@ -774,36 +728,39 @@ Syntax: /bd check \`\`\``);
     });
   }else if (args[0] == 'check'){
     var arr = [];
+    var arr2 = [], arr3 = [];
+    let date = new Date();
+    let day = getDayAmount(date.getUTCDate(),date.getUTCMonth(),date.getUTCFullYear());
     bd = require(bdname);
-    for (var key in bd){
+    for (let key in bd){
       if (bd.hasOwnProperty(key)){
-        if (((Math.abs(bd[key]['day']) - day) < 10) && ((Math.abs(bd[key]['month']) - month) == 0)){
-          if ((Math.abs(bd[key]['day']) - day) == 0){
-            let a = ((Math.abs(bd[key]['day']) - day));
-            arr.push(`It's ${bd[key]['name']}'s birthday today!`);
-        }else{
-          let a = ((Math.abs(bd[key]['day']) - day));
-          arr.push(`It's going to be ${bd[key]['name']}'s birthday in ${a} day(s)`);
-        }
-      }
+        let userday = getDayAmount(parseInt(bd[key]['day']), parseInt(bd[key]['month'])-1, date.getUTCFullYear());
+        console.log(bd[key]['name'] + " : " + userday + "\n");
+        if (userday - day <= 7 && userday - day > 0) arr.push(`'${bd[key]['name']}'s birthday will arrive in ${Math.abs(userday - day)} days.`);
+        if (userday - day >= -7 && userday - day < 0) arr3.push(`'${bd[key]['name']}'s birthday has already passed for ${Math.abs(userday - day)} days.`);
+        if (userday - day === 0) arr2.push(`Today is '${bd[key]['name']}'s birthday.`);
     }
   }
-
-  msg.channel.sendMessage("\`\`\`xl\n" + arr.join("\n") + "\`\`\`");
- }
+  let hour = date.getUTCHours();
+  hour = (date.getUTCHours() < 10) ? (`0${hour}`) : hour;
+  let min = date.getUTCMinutes();
+  min = (date.getUTCMinutes() < 10) ? (`0${min}`) : min;
+  day = date.getUTCDate();
+msg.channel.sendMessage("\`\`\`xl\n" + arr2.join("\n") + "\n\n" + arr.join("\n") + "\n\n" + arr3.join("\n") + "\n\n" + "The current UTC time is: " + (`${day}\/${month}, ${hour}\:${min}`) + "\`\`\`");
+}
 }
 };
 
-bot.on("message", msg => {
-  if(!msg.content.startsWith(prefix)) return;
 
+bot.on("message", msg => {
+  //if (msg.channel.type != 'text') return;
+  // if (msg.author.id != '197733648403791872') return msg.channel.sendMessage("Maintenance in progress!");
+  // if (msg.author.id === 188698737785307145) return msg.channel.sendMessage("Error: Usage blocked.");
+  if(!msg.content.startsWith(prefix)) return;
+  if (msg.channel.id == tokens.speak) console.log(`${msg.author.username} : ${msg.content}`);
   if (commands.hasOwnProperty(msg.content.toLowerCase().slice(tokens.prefix.length).split(' ')[0])) commands[msg.content.toLowerCase().slice(tokens.prefix.length).split(' ')[0]](msg);
 
 });
-
-/*bot.on('guildMemberRemove', (u) => {
-    bot.channels.get('234586311191822336').sendMessage(`${u.user.username} has left the server`).then(console.log(u.user.username));
-});*/
 bot.login("MjY4NzgwODQ1OTg3Mzk3NjQy.C1fxMA.wRDQDEGSFBLRvALnelqnZszg2PU");
 
 function isInt(value) {
@@ -811,4 +768,41 @@ function isInt(value) {
 }
 function randomInt(low, high) {
     return Math.floor(Math.random() * (high - low) + low);
+}
+function sort (arr){
+for (let i = (arr.length - 1); i >= 0; i--){
+  for (let j = 1; j <= i; j++){
+    if (arr[j-1]['day'] > arr[j]['day'])
+         {
+              let temp = arr[j-1];
+              arr[j-1] = arr[j];
+              arr[j] = temp;
+  }
+}
+}
+}
+function list (obj, arr){
+  for (let key in obj){
+    if (obj.hasOwnProperty(key)){
+    console.log(key);
+    arr.push(obj[key]);
+    }
+  }
+  sort(arr);
+  //resort(arr);
+for (let i = 0; i<arr.length; i++){
+  console.log(arr[i]['name'] + " " + arr[i]['day']);
+}
+}
+function checkLeapYear(year){
+  let ret;
+  if ((year % 4 === 0)&&(year % 100 !== 0) || (year % 400 === 0)) ret = true;
+  else ret = false;
+  return ret;
+}
+function getDayAmount(day, month, year){
+  let array = [0,31,59,90,120,151,181,212,243,273,304,334];
+  day = array[month] + day;
+  if ((checkLeapYear(year) === true) && ((month + 1) > 2)) day + 1;
+  return day;
 }
