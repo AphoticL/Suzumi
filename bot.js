@@ -94,7 +94,7 @@ bot.on('ready', () =>{
       console.log("Speaking at " + tokens.speak);
   } else {
     try {
-    bot.channels.get(`${tokens['speak']}`).sendMessage(`${input}`);
+    bot.channels.get(`${tokens['speak']}`).send(`${input}`);
   } catch(e) {
     console.log(e);
   }
@@ -102,12 +102,13 @@ bot.on('ready', () =>{
     rl.prompt();
 });
 });
+//var end;
 // COMMANDS
 const commands = {"ping": (msg) => {
-  var start = new Date();
-  msg.channel.sendMessage(`Pong.`);
-  var end = new Date() - start;
-  msg.channel.sendMessage(`\`Took: ${end}ms\``);
+   var start = new Date();
+  msg.channel.send(`Pong.`);
+ var end = new Date() - start;
+  msg.channel.send(`\`Took: ${end}ms\``);
 },
 "rs": (msg) => {
   exec('cd C:\\Users\\Administrator\\Documents\\GitHub\\Suzumi', (error, stdout, stderr) => {
@@ -136,7 +137,7 @@ console.log(`stderr: ${stderr}`);
 });
 },
 "stopall": (msg) => {
-  if (msg.author.id != '197733648403791872') return msg.channel.sendMessage("Forbidden.");
+  if (msg.author.id != '197733648403791872') return msg.channel.send("Forbidden.");
   exec('cd C:\\Users\\Administrator\\Documents\\GitHub\\Suzumi', (error, stdout, stderr) => {
   if (error) {
     console.error(`exec error: ${error}`);
@@ -164,9 +165,9 @@ console.log(`stderr: ${stderr}`);
 },
   "play": (msg) => {
     if (msg.author == bot.user) return;
-  if (queue[msg.guild.id] === undefined) return msg.channel.sendMessage(`Add some songs to the queue first with ${tokens.prefix}add`);
+  if (queue[msg.guild.id] === undefined) return msg.channel.send(`Add some songs to the queue first with ${tokens.prefix}add`);
   if (!msg.guild.voiceConnection) return commands.join(msg).then(() => commands.play(msg));
-  if (queue[msg.guild.id].playing) return msg.channel.sendMessage("Already Playing");
+  if (queue[msg.guild.id].playing) return msg.channel.send("Already Playing");
   let dispatcher;
   queue[msg.guild.id].playing = true;
 
@@ -178,30 +179,30 @@ console.log(`stderr: ${stderr}`);
     if (arr.length-1 < 1) msg.member.voiceChannel.leave();
 
     console.log(song);
-    if (song === undefined) return msg.channel.sendMessage("Queue is empty").then(() => {
+    if (song === undefined) return msg.channel.send("Queue is empty").then(() => {
       queue[msg.guild.id].playing = false;
       msg.member.voiceChannel.leave();
     });
-    msg.channel.sendMessage(`Playing: **${song.title}** as requested by: **${song.requester}**`);
+    msg.channel.send(`Playing: **${song.title}** as requested by: **${song.requester}**`);
     dispatcher = msg.guild.voiceConnection.playStream(yt(song.url, { audioonly: true }), { passes : tokens.passes });
     let collector = msg.channel.createCollector(m => m);
     collector.on('message', m => {
       if (m.content.startsWith(tokens.prefix + 'pause')) {
         if (arr.length-1 < 1) msg.member.voiceChannel.leave();
         if (msg.author == bot.user) return;
-msg.channel.sendMessage('It\'s pretty fun; why\'d you pause that..?').then(() => {
+msg.channel.send('It\'s pretty fun; why\'d you pause that..?').then(() => {
   dispatcher.pause();
 });
       } else if (m.content.startsWith(tokens.prefix + 'resume')){
         if (arr.length-1 < 1) msg.member.voiceChannel.leave();
         if (msg.author == bot.user) return;
-msg.channel.sendMessage('owo)').then(() => {
+msg.channel.send('owo)').then(() => {
   dispatcher.resume();
 });
       } else if (m.content.startsWith(tokens.prefix + 'skip')){
         if (arr.length-1 < 1) msg.member.voiceChannel.leave();
         if (msg.author == bot.user) return;
-msg.channel.sendMessage('Skipped').then(() => {
+msg.channel.send('Skipped').then(() => {
   dispatcher.end();
 });
       } else if (m.content.startsWith('/volume')){
@@ -212,14 +213,14 @@ msg.channel.sendMessage('Skipped').then(() => {
         let args = m.content.split(' ').slice(1);
         if (args[0] < 101){
 dispatcher.setVolume(Math.min((args[0])/50));
-msg.channel.sendMessage(`Volume: ${Math.round(dispatcher.volume*50)}%`);
+msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
 } else {
-  msg.channel.sendMessage("IT'S TOO LOUDDD!! (Please don't go overboard with this command -w-)");
+  msg.channel.send("IT'S TOO LOUDDD!! (Please don't go overboard with this command -w-)");
 }
       }
        else if (m.content.startsWith(tokens.prefix + 'time')){
          if (arr.length-1 < 1) msg.member.voiceChannel.leave();
-msg.channel.sendMessage(`time: ${Math.floor(dispatcher.time / 60000)}:${Math.floor((dispatcher.time % 60000)/1000) <10 ? '0'+Math.floor((dispatcher.time % 60000)/1000) : Math.floor((dispatcher.time % 60000)/1000)}`);
+msg.channel.send(`time: ${Math.floor(dispatcher.time / 60000)}:${Math.floor((dispatcher.time % 60000)/1000) <10 ? '0'+Math.floor((dispatcher.time % 60000)/1000) : Math.floor((dispatcher.time % 60000)/1000)}`);
       }
     });
     dispatcher.on('end', () => {
@@ -228,7 +229,7 @@ msg.channel.sendMessage(`time: ${Math.floor(dispatcher.time / 60000)}:${Math.flo
       play(queue[msg.guild.id].songs[0]);
     });
     dispatcher.on('error', (err) => {
-      return msg.channel.sendMessage('error: ' + err).then(() => {
+      return msg.channel.send('error: ' + err).then(() => {
 collector.stop();
 queue[msg.guild.id].songs.shift();
 play(queue[msg.guild.id].songs[0]);
@@ -248,29 +249,29 @@ play(queue[msg.guild.id].songs[0]);
   if (msg.author == bot.user) return;
   try{
   let url = msg.content.split(' ')[1];
-  if (url == '' || url === undefined) return msg.channel.sendMessage(`You must add a url, or youtube video id after ${tokens.prefix}add`);
+  if (url == '' || url === undefined) return msg.channel.send(`You must add a url, or youtube video id after ${tokens.prefix}add`);
   yt.getInfo(url, (err, info) => {
-    if(err) return msg.channel.sendMessage('Invalid YouTube Link: ' + err);
+    if(err) return msg.channel.send('Invalid YouTube Link: ' + err);
     if (!queue.hasOwnProperty(msg.guild.id)) queue[msg.guild.id] = {}, queue[msg.guild.id].playing = false, queue[msg.guild.id].songs = [];
     queue[msg.guild.id].songs.push({url: url, title: info.title, requester: msg.author.username});
-    msg.channel.sendMessage(`Added **${info.title}** to the queue. Anything else?`);
+    msg.channel.send(`Added **${info.title}** to the queue. Anything else?`);
   });
 }catch(e){
   console.log(e);
-  msg.channel.sendMessage("That's an invalid YouTube link. Please try again.");
+  msg.channel.send("That's an invalid YouTube link. Please try again.");
 }
 },
 'queue': (msg) => {
-  if (queue[msg.guild.id] === undefined) return msg.channel.sendMessage(`Add some songs to the queue first with ${tokens.prefix}add`);
+  if (queue[msg.guild.id] === undefined) return msg.channel.send(`Add some songs to the queue first with ${tokens.prefix}add`);
   let tosend = [];
   queue[msg.guild.id].songs.forEach((song, i) => { tosend.push(`${i+1}. ${song.title} - Requested by: ${song.requester}`);});
-  msg.channel.sendMessage(`__**${msg.guild.name}'s Music Queue:**__ Currently **${tosend.length}** songs queued ${(tosend.length > 15 ? '*[Only next 15 shown]*' : '')}\n\`\`\`${tosend.slice(0,15).join('\n')}\`\`\``);
+  msg.channel.send(`__**${msg.guild.name}'s Music Queue:**__ Currently **${tosend.length}** songs queued ${(tosend.length > 15 ? '*[Only next 15 shown]*' : '')}\n\`\`\`${tosend.slice(0,15).join('\n')}\`\`\``);
 },
 
 'help': (msg) => {
   let args = msg.content.split(" ").slice(1),
   resstr;
-  if (!args[0]) return msg.channel.sendMessage(`\`\`\`xl
+  if (!args[0]) return msg.channel.send(`\`\`\`xl
 ==VOICE CHAT COMMANDS==
 /join
 /add
@@ -320,7 +321,7 @@ play(queue[msg.guild.id].songs[0]);
       resstr = "Do you want Suzumi to remind you of your birthday? Use this command. Syntax will be listed inside.";
       break;
   }
-    msg.channel.sendMessage(resstr);
+    msg.channel.send(resstr);
 },
 'reboot': (msg) => {
   if (msg.author.id == tokens.adminID) process.exit(); //Requires a node module like Forever to work.
@@ -330,11 +331,11 @@ play(queue[msg.guild.id].songs[0]);
   var args = msg.content.split(" ").slice(1);
   let col = args[0];
   if (col == null) {
-    msg.channel.sendMessage("\*grabs paint bucket + brush\*");
+    msg.channel.send("\*grabs paint bucket + brush\*");
     setTimeout(function(){
-      msg.channel.sendMessage("If you want to make me paint your name, type [/color] followed by the color you want.");
+      msg.channel.send("If you want to make me paint your name, type [/color] followed by the color you want.");
       setTimeout(function(){
-msg.channel.sendMessage(`The list of the paint I got is the following:
+msg.channel.send(`The list of the paint I got is the following:
   \`\`\`xl
   ${colstr}
     \`\`\`  `);
@@ -358,7 +359,7 @@ let colvar = parseInt((file[colre]["value"]), 16);
       if(msg.guild.roles.exists('name', `c_${colre}`))
       msg.guild.roles.filter( role => {
 if(role.name.startsWith(`c_${colre}`)){
-  msg.member.addRole(role).then( () => {msg.channel.sendMessage("Your name is now painted! Fancy, huh?");});
+  msg.member.addRole(role).then( () => {msg.channel.send("Your name is now painted! Fancy, huh?");});
 }
       });
       else {
@@ -375,11 +376,11 @@ if(role.name.startsWith(`c_${colre}`)){
         "SPEAK", // speak on voice
         "CHANGE_NICKNAME"
       ]
-    }).then(role => msg.member.addRole(role).then( () => msg.channel.sendMessage("Your name is now painted with a fresh batch of color! Fancy, huh?")));
+    }).then(role => msg.member.addRole(role).then( () => msg.channel.send("Your name is now painted with a fresh batch of color! Fancy, huh?")));
 }
 } catch (e) {
     if (e != "TypeError: msg.guild.roles.filter(...).then is not a function"){
-      msg.channel.sendMessage(`Someone stole my color buckets ;w; So here's the list of the paint I got right now:
+      msg.channel.send(`Someone stole my color buckets ;w; So here's the list of the paint I got right now:
 \`\`\`xl
 ${colstr}\`\`\`    `);
   }
@@ -402,11 +403,11 @@ ${colstr}\`\`\`    `);
   var args = msg.content.split(" ").slice(1);
   let col = args[0];
   if (col == null) {
-    msg.channel.sendMessage("\*grabs paint bucket + brush\*");
+    msg.channel.send("\*grabs paint bucket + brush\*");
     setTimeout(function(){
-      msg.channel.sendMessage("If you want to make me paint your name, type [/color] followed by the color you want.");
+      msg.channel.send("If you want to make me paint your name, type [/color] followed by the color you want.");
       setTimeout(function(){
-msg.channel.sendMessage(`The list of the paint I got is the following:
+msg.channel.send(`The list of the paint I got is the following:
   \`\`\`xl
 
   ${colstr}
@@ -428,7 +429,7 @@ let colvar = parseInt((file[colre]["value"]), 16);
       if(msg.guild.roles.exists('name', `c_${colre}`))
       msg.guild.roles.filter( role => {
 if(role.name.startsWith(`c_${colre}`)){
-  msg.member.addRole(role).then( () => {msg.channel.sendMessage("Your name is now painted! Fancy, huh?");});
+  msg.member.addRole(role).then( () => {msg.channel.send("Your name is now painted! Fancy, huh?");});
 }
       });
       else {
@@ -445,11 +446,11 @@ if(role.name.startsWith(`c_${colre}`)){
         "SPEAK", // speak on voice
         "CHANGE_NICKNAME"
       ]
-    }).then(role => msg.member.addRole(role).then( () => msg.channel.sendMessage("Your name is now painted with a fresh batch of color! Fancy, huh?")));
+    }).then(role => msg.member.addRole(role).then( () => msg.channel.send("Your name is now painted with a fresh batch of color! Fancy, huh?")));
 }
 } catch (e) {
     if (e != "TypeError: msg.guild.roles.filter(...).then is not a function"){
-      msg.channel.sendMessage(`Someone stole my color buckets ;w; So here's the list of the paint I got right now:
+      msg.channel.send(`Someone stole my color buckets ;w; So here's the list of the paint I got right now:
 \`\`\`xl
 
 ${colstr}
@@ -465,41 +466,61 @@ ${colstr}
   let check = isInt(d);
   let ins = ["Is that \*\*really\*\* a \*\*\*REAL\*\*\* number?", "How am I supposed to do that!? B-Baka...",  "Having fun?", "Totally doable.", "Legit 100\%", "I'll stab you if you do it again, I swear."];
   if (d == null){
-    msg.channel.sendMessage("Feelin' lucky? Type /d followed by a number and see what happens.");
+    msg.channel.send("Feelin' lucky? Type /d followed by a number and see what happens.");
   } else {
     if (check === true){
-  let num = Math.floor(Math.random() * (d - 1) + 1);
+  let num = randomInt(1, d);
   let per = Math.floor((num / d) * 100);
   let lo = ["Xeno a? What have you done?!", "Bless RNG.", "Pathetic.", "Xeno a, stop messing with it!"];
   if (per > 30){
 
-  msg.channel.sendMessage("You rolled a " + num + ". How was it?");
+  msg.channel.send("You rolled a " + num + ". How was it?");
 } else if (per <= 30 ) {
-  msg.channel.sendMessage("You rolled a " + num + ". Uh...");
+  msg.channel.send("You rolled a " + num + ". Uh...");
   setTimeout(function(){
-    let num = Math.floor(Math.random() * (lo.length - 1) + 1);
-    msg.channel.sendMessage(lo[num]);
+    let num = Math.round(Math.random() * (lo.length - 1) + 1);
+    msg.channel.send(lo[num]);
   }, 2000);
 }
 } else if (d != "Xeno") {
-  let num = Math.floor(Math.random() * (ins.length - 1) + 1);
-  msg.channel.sendMessage(ins[num]);
+  let num = randomInt(1,ins.length);
+  msg.channel.send(ins[num]);
 } else if ((d.toLowerCase() == "xeno") && ((args[1] == "a") || args[1] == "A")){
-  msg.channel.sendMessage("Calling out to the god of RNG themselves isn't going to give you any good.");
+  msg.channel.send("Calling out to the god of RNG themselves isn't going to give you any good.");
 }
 }
 },
 'eval' : (msg) => {
-  if (msg.author.id !== ('197733648403791872')) return msg.channel.sendMessage("I won't let anyone except my master to use this...\n(To prevent unauthorized shutdown, this command is locked to Yuugen only.)");
-  let args = msg.content.split(" ").slice(1);
-  var arr = [];
-  for (let i = 0; i < args.length; i++) arr.push(args[i]);
-try{
-    let res = eval(arr.join(" "));
-    msg.channel.sendMessage(res);
-} catch (e) {
-msg.reply(e);
-}
+  var col,
+  inp = msg.content.split(" ").slice(1).join(" "),
+  out;
+  try {
+    out = eval(inp);
+    col = 0x00ff00;
+  } catch (e) {
+    out = e;
+    if (out == e) col = 0xff0000;
+  }
+  if (msg.author.id !== ('197733648403791872')) return msg.channel.send("I won't let anyone except my master to use this...\n(To prevent unauthorized shutdown, this command is locked to Yuugen only.)");
+  const embed = new Discord.RichEmbed()
+  .setTitle('Evaluation Results')
+  .addField('\u200b', '\u200b', true)
+  /*
+   * Alternatively, use '#00AE86', [0, 174, 134] or an integer number.
+   */
+  .setColor(col)
+  /*
+   * Takes a Date object, defaults to current date.
+   */
+  .setTimestamp()
+  .addField('Eval Input', (`\`\`\`${inp}\`\`\``))
+  /*
+   * Inline fields may not display as inline if the thumbnail and/or image is too big.
+   */
+  .addField('Eval Output', (`\`\`\`${out}\`\`\``), true);
+
+msg.channel.send({embed});
+
 },
 
 'say' : (msg) => {
@@ -507,7 +528,7 @@ msg.reply(e);
   msg.delete();
   let args = msg.content.split(" ").slice(1);
 
-  msg.channel.sendMessage(`${msg.author.username} >> ${args.join(" ")}`);
+  msg.channel.send(`${msg.author.username} >> ${args.join(" ")}`);
 },
 'event' : (msg) => {
  // One line contains 23 letters w/o an i
@@ -516,9 +537,9 @@ msg.reply(e);
  **/
     var Canvas = require('canvas')
       , Image = Canvas.Image;
-    if (msg.channel.name != 'bot-spam') return msg.channel.sendMessage("You're not allowed to use it here! Go to bot-spam instead.");
+    if (msg.channel.name != 'bot-spam') return msg.channel.send("You're not allowed to use it here! Go to bot-spam instead.");
     let check = msg.content.split(" ").slice(1)[0];
-    if (!check) return msg.channel.sendMessage("Want to make a sub-event of your own? Use this command followed by the color, then your texts. Be sure to add a comma to separate your words if you want to make a new line!");
+    if (!check) return msg.channel.send("Want to make a sub-event of your own? Use this command followed by the color, then your texts. Be sure to add a comma to separate your words if you want to make a new line!");
 
   if (!msg.content.includes(",")){
       try{
@@ -536,7 +557,7 @@ msg.reply(e);
             imgdir = '21';
             break;
             default:
-            return msg.channel.sendMessage("Invalid Color.");
+            return msg.channel.send("Invalid Color.");
           }
           test = msg.content.split(" ").slice(2);
           var canvas = new Canvas(300, 40);
@@ -561,7 +582,7 @@ msg.reply(e);
   else {
       let args = msg.content.split(" ").slice(1);
       var col = args[0];
-      if ((col.toLowerCase() !== 'red')&&(col.toLowerCase() !== 'yellow')&&(col.toLowerCase() !== 'purple')) return msg.channel.sendMessage("Invalid Color. You can only use Red, Yellow or Purple.");
+      if ((col.toLowerCase() !== 'red')&&(col.toLowerCase() !== 'yellow')&&(col.toLowerCase() !== 'purple')) return msg.channel.send("Invalid Color. You can only use Red, Yellow or Purple.");
       let targs = msg.content.split(" ").slice(2).join(" ").split(",");
       img = new Image;
       let l = targs.length;
@@ -570,7 +591,7 @@ msg.reply(e);
       ctx.textAlign = "center";
       ctx.font = '25px Impact';
       ctx.fillStyle = 'white';
-      if (l.length > 4) return msg.channel.sendMessage("Too much text!");
+      if (l.length > 4) return msg.channel.send("Too much text!");
       if (col.toLowerCase() == 'red'){
       switch(l){
           case 2:
@@ -599,7 +620,7 @@ msg.reply(e);
               console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
               break;
           default:
-              return msg.channel.sendMessage('Invalid Syntax!');
+              return msg.channel.send('Invalid Syntax!');
       }
       f = canvas.toBuffer();
       msg.channel.sendFile(f);
@@ -631,7 +652,7 @@ msg.reply(e);
             console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
             break;
         default:
-            return msg.channel.sendMessage('Invalid Syntax!');
+            return msg.channel.send('Invalid Syntax!');
 
   }
   f = canvas.toBuffer();
@@ -665,7 +686,7 @@ msg.reply(e);
           console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
           break;
       default:
-          return msg.channel.sendMessage('Invalid Syntax!');
+          return msg.channel.send('Invalid Syntax!');
   }
   f = canvas.toBuffer();
   msg.channel.sendFile(f);
@@ -674,31 +695,46 @@ msg.reply(e);
 },
  'spell' : (msg) => {
    var Canvas = require('canvas')
-  , image = new Canvas.Image;
+  , image = new Canvas.Image
+  , opentype = require('opentype.js');
+  var fs = require('fs');
+  var path = require('path');
+  //var Font = Canvas.Font;
 
-   if (msg.channel.name != 'bot-spam') return msg.channel.sendMessage("You're not allowed to use it here! Go to bot-spam instead.");
+/*if (!Font) {
+  throw new Error('Need to compile with font support');
+}
+function fontFile (name) {
+  return path.join(__dirname, '/font/', name);
+}
+/*var qFont = new Font('Quark-Light', fontFile('Quark-Light.otf'));
+qFont.addFace(fontFile('Quark-Bold.otf'), 'normal', 'bold');*/
+   if (msg.channel.name != 'bot-spam') return msg.channel.send("You're not allowed to use it here! Go to bot-spam instead.");
 
    let check = msg.content.split(" ").slice(1)[0];
    let args = msg.content.split(" ").slice(1);
-   if (!check) return msg.channel.sendMessage(`Want to make a card of your own, ${msg.author}? use [/spell] follow by the name you want! Use sparingly.`);
-   var canvas = new Canvas(255,44);
-   var ctx = canvas.getContext('2d');
-   image.src = (__dirname + '/image/spell.png');
-   ctx.drawImage(image, 0, 0);
-   ctx.textAlign = 'end';
-   ctx.fillStyle = 'white';
-   ctx.font = '12px Arial';
-   // fillText(text, x, y)
-   ctx.fillText(args.join(" "), 238, 29);
-   let f = canvas.toBuffer();
-   msg.channel.sendFile(f);
+   if (!check) return msg.channel.send(`Want to make a card of your own, ${msg.author}? use [/spell] follow by the name you want! Use sparingly.`);
+       var canvas = new Canvas(255,44);
+       var ctx = canvas.getContext('2d');
+       image.src = (__dirname + '/image/spell.png');
+       ctx.drawImage(image, 0, 0);
+       ctx.textAlign = 'end';
+       //ctx.addFont(qFont);
+       ctx.fillStyle = 'white';
+       ctx.font = '12px Arial';
+       // fillText(text, x, y)
+       // font.draw(ctx, text, x, y, fontSize, options)
+       // font.draw(ctx, args.join(" "), 238, 29, 12);
+       ctx.fillText(args.join(" "), 238, 29);
+       let f = canvas.toBuffer();
+       msg.channel.sendFile(f);
  },
  'bd': (msg) => {
    var date = new Date();
    console.log("Command");
    var day = date.getDate(), month = date.getMonth() + 1;
    let args = msg.content.split(" ").slice(1);
-   if (args[0] === undefined) return msg.channel.sendMessage(`\`\`\`xl
+   if (args[0] === undefined) return msg.channel.send(`\`\`\`xl
 LIST OF BIRTHDAY COMMANDS:
 add: "Add your birthday to make Suzumi remind you of your birthday."
 Syntax: /bd add dd/mm
@@ -706,7 +742,7 @@ check: "Check if anyone got a birthday today!"
 Syntax: /bd check \`\`\``);
   if (args[0] == 'add'){
     console.log(args[1]);
-    if (!args[1]) return msg.channel.sendMessage("Please include your date in dd/mm format");
+    if (!args[1]) return msg.channel.send("Please include your date in dd/mm format");
     let date = args[1].split("/");
     console.log(msg.author.username);
     let name = msg.author.username;
@@ -724,7 +760,7 @@ Syntax: /bd check \`\`\``);
     fs.writeFile(bdname, JSON.stringify(bd, null, 2), (err) => {
       if (err) throw err;
       console.log(JSON.stringify(bd, null, 2));
-      msg.channel.sendMessage("Added!");
+      msg.channel.send("Added!");
     });
   }else if (args[0] == 'check'){
     var arr = [];
@@ -746,16 +782,118 @@ Syntax: /bd check \`\`\``);
   let min = date.getUTCMinutes();
   min = (date.getUTCMinutes() < 10) ? (`0${min}`) : min;
   day = date.getUTCDate();
-msg.channel.sendMessage("\`\`\`xl\n" + arr2.join("\n") + "\n\n" + arr.join("\n") + "\n\n" + arr3.join("\n") + "\n\n" + "The current UTC time is: " + (`${day}\/${month}, ${hour}\:${min}`) + "\`\`\`");
+msg.channel.send("\`\`\`xl\n" + arr2.join("\n") + "\n\n" + arr.join("\n") + "\n\n" + arr3.join("\n") + "\n\n" + "The current UTC time is: " + (`${day}\/${month}, ${hour}\:${min}`) + "\`\`\`");
 }
+},
+'r' : (msg) => {
+
+  var _getFileAmount = function(dir) {
+
+    var filesystem = require("fs");
+    // var results = [];
+    var results = 0;
+    filesystem.readdirSync(dir).forEach(function(file) {
+      results++;
+        /*file = dir+'/'+file;
+        var stat = filesystem.statSync(file);
+
+        if (stat && stat.isDirectory()) {
+            results = results.concat(_getAllFilesFromFolder(file));
+        } else results.push(file);*/
+
+    });
+
+    return results;
+
+};
+  let tags = ['nope','lol'];
+  let arr = msg.content.split(" ").slice(1).join(" ").toLowerCase(),
+  r = undefined;
+  if (!arr) return msg.channel.send("Want a reaction image this instant? Try this command followed by a tag. Refer to the [/r _tag] commands for all tags.");
+  switch (arr){
+    case 'nope':
+    case 'lol':
+    //case 'delete':
+    r = arr;
+    break;
+    case '_tag':
+    return msg.channel.send(`Here are the current tags available :
+    \`\`\`diff
++ ${tags.join("\n+ ")}\`\`\``);
+    default:
+    break;
+  }
+  if (!r) return msg.channel.send(`There are no such images with the \`${arr}\` tag. Refer to the command \`/r _tag\` for a list of tags available.`);
+  let i = randomInt(0,_getFileAmount("./reactions/" + r) - 1);
+  console.log(_getFileAmount("./reactions/" + r) - 1);
+  console.log(i);
+  try {
+  msg.channel.sendFile("./reactions/" + r + "/" + i + ".jpg");
+} catch (e) {
+  console.err(e);
+}
+},
+'numbergame' : (msg) => {
+  let arr = msg.content.toLowerCase().split(" ").slice(1);
+  let max;
+  if (arr[0]) switch (arr[0]){
+    case 'easy':
+    case 'e':
+    max = 100;
+    break;
+    case 'normal':
+    case 'n':
+    max = 250;
+    break;
+    case 'hard':
+    case 'h':
+    max = 400;
+    break;
+    case 'lunatic':
+    case 'l':
+    max = 600;
+    break;
+    case 'extra':
+    case 'x':
+    max = 1000;
+    break;
+  } else return msg.channel.send("Please type /numbergame followed by either of these difficulties! [easy, normal, hard, lunatic, extra].");
+  let num = randomInt(1, max);
+  console.log(num);
+  let collector = msg.channel.createCollector(m => m);
+  msg.channel.send("You have 5 chances! Guess the number correctly and you win!");
+  let win = false,
+  amount = 0;
+  collector.on('collect' , ((m) => {
+    let msg = m.content.trim();
+    let arr = msg.split(" ")[0];
+    if (!isInt(arr)) return;
+    if (amount < 5){
+    if (arr > num) {
+      amount++;
+      m.channel.send("That's too high! Try again!");
+    } else if (arr < num) {
+      amount++;
+      m.channel.send("That's too low! Try again!");
+    } else if (arr == num) {
+      m.channel.send("Correct! You win!");
+      collector.stop();
+    }
+  }
+  if (amount === 5) {
+    collector.stop();
+    m.channel.send("That's too bad! The number was " + num);
+  }
+}));
 }
 };
 
 
 bot.on("message", msg => {
+
   //if (msg.channel.type != 'text') return;
-  // if (msg.author.id != '197733648403791872') return msg.channel.sendMessage("Maintenance in progress!");
-  // if (msg.author.id === 188698737785307145) return msg.channel.sendMessage("Error: Usage blocked.");
+  // if (msg.author.id != '197733648403791872') return msg.channel.send("Maintenance in progress!");
+  // if (msg.author.id === 188698737785307145) return msg.channel.send("Error: Usage blocked.");
   if(!msg.content.startsWith(prefix)) return;
   if (msg.channel.id == tokens.speak) console.log(`${msg.author.username} : ${msg.content}`);
   if (commands.hasOwnProperty(msg.content.toLowerCase().slice(tokens.prefix.length).split(' ')[0])) commands[msg.content.toLowerCase().slice(tokens.prefix.length).split(' ')[0]](msg);
@@ -767,7 +905,7 @@ function isInt(value) {
   return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value));
 }
 function randomInt(low, high) {
-    return Math.floor(Math.random() * (high - low) + low);
+    return Math.round(Math.random() * (high - low) + low);
 }
 function sort (arr){
 for (let i = (arr.length - 1); i >= 0; i--){
