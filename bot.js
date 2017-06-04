@@ -4,7 +4,7 @@ const prefix = "/";
 const fs = require("fs");
 const filename = "./config_n.json";
 const file = require(filename);
-const yt = require("ytdl-core");
+// const yt = require("ytdl-core");
 const readline = require('readline');
 const rl = readline.createInterface({
   input: process.stdin,
@@ -163,7 +163,7 @@ console.log(`stdout: ${stdout}`);
 console.log(`stderr: ${stderr}`);
 });
 },
-  "play": (msg) => {
+  /*"play": (msg) => {
     if (msg.author == bot.user) return;
   if (queue[msg.guild.id] === undefined) return msg.channel.send(`Add some songs to the queue first with ${tokens.prefix}add`);
   if (!msg.guild.voiceConnection) return commands.join(msg).then(() => commands.play(msg));
@@ -267,7 +267,7 @@ play(queue[msg.guild.id].songs[0]);
   queue[msg.guild.id].songs.forEach((song, i) => { tosend.push(`${i+1}. ${song.title} - Requested by: ${song.requester}`);});
   msg.channel.send(`__**${msg.guild.name}'s Music Queue:**__ Currently **${tosend.length}** songs queued ${(tosend.length > 15 ? '*[Only next 15 shown]*' : '')}\n\`\`\`${tosend.slice(0,15).join('\n')}\`\`\``);
 },
-
+**/
 'help': (msg) => {
   let args = msg.content.split(" ").slice(1),
   resstr;
