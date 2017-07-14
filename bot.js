@@ -110,6 +110,37 @@ const commands = {"ping": (msg) => {
  var end = new Date() - start;
   msg.channel.send(`\`Took: ${end}ms\``);
 },
+wolfram : (msg, lang) => {
+    var download = function(url, dest, cb) {
+    var file = fs.createWriteStream(dest);
+    var request = http.get(url, function(response) {
+         response.pipe(file);
+         file.on('finish', function() {
+         file.close(cb);  // close() is async, call cb after close completes.
+    });
+  }).on('error', function(err) { // Handle errors
+    fs.unlink(dest); // Delete the file async. (But we don't check the result)
+    if (cb) cb(err.message);
+  });
+};
+
+    let wolfram = require('wolfram').createClient('H6QA6L-WJ75WJ8VHE');
+    let q = msg.content.split(" ").slice(1).join(" ");
+    const http = require('http');
+    let files = [];
+    wolfram.query(q, (err, result) => {
+        if (err) return console.log(err);        
+        for (var i in result){
+            download(result[i].subpods[0].image, `pics/${i}.jpg`);
+            files.push(`pics/${i}.jpg`);
+            console.log(files);
+        }
+    });
+    setTimeout(function() {
+        msg.channel.send({files});
+    }, 5000);
+    
+    },
 "rs": (msg) => {
   exec('cd C:\\Users\\Administrator\\Documents\\GitHub\\Suzumi', (error, stdout, stderr) => {
   if (error) {
@@ -163,7 +194,7 @@ console.log(`stdout: ${stdout}`);
 console.log(`stderr: ${stderr}`);
 });
 },
-  /*"play": (msg) => {
+  "play": (msg) => {
     if (msg.author == bot.user) return;
   if (queue[msg.guild.id] === undefined) return msg.channel.send(`Add some songs to the queue first with ${tokens.prefix}add`);
   if (!msg.guild.voiceConnection) return commands.join(msg).then(() => commands.play(msg));
@@ -267,7 +298,7 @@ play(queue[msg.guild.id].songs[0]);
   queue[msg.guild.id].songs.forEach((song, i) => { tosend.push(`${i+1}. ${song.title} - Requested by: ${song.requester}`);});
   msg.channel.send(`__**${msg.guild.name}'s Music Queue:**__ Currently **${tosend.length}** songs queued ${(tosend.length > 15 ? '*[Only next 15 shown]*' : '')}\n\`\`\`${tosend.slice(0,15).join('\n')}\`\`\``);
 },
-**/
+
 'help': (msg) => {
   let args = msg.content.split(" ").slice(1),
   resstr;
