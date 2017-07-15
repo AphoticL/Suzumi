@@ -874,6 +874,8 @@ msg.channel.send("\`\`\`xl\n" + arr2.join("\n") + "\n\n" + arr.join("\n") + "\n\
 'numbergame' : (msg) => {
   let arr = msg.content.toLowerCase().split(" ").slice(1);
   let max;
+	let extremeflag = false;
+	let hardtwist = (randomInt(1,5) < 3) ? true : false;
   if (arr[0]) switch (arr[0]){
     case 'easy':
     case 'e':
@@ -900,6 +902,14 @@ msg.channel.send("\`\`\`xl\n" + arr2.join("\n") + "\n\n" + arr.join("\n") + "\n\
 	  case 'ph':
 		  max = 5000;
 		  break;
+	case 'abex':
+		  max = 10000;
+		  extremeflag = true;
+		  break;
+	case 'abex00':
+		  max = 50000;
+		  extremeflag = true;
+		  break;
   } else return msg.channel.send("Please type /numbergame followed by either of these difficulties! [easy, normal, hard, lunatic, extra, ???].");
   let num = randomInt(1, max);
   console.log(num);
@@ -907,11 +917,13 @@ msg.channel.send("\`\`\`xl\n" + arr2.join("\n") + "\n\n" + arr.join("\n") + "\n\
   msg.channel.send("You have 8 chances! Guess the number correctly and you win!");
   let win = false,
   amount = 0;
+	let max = (extremeflag) ? 12 : 8;
+	if (hardtwist) max = max - 3;
   collector.on('collect' , ((m) => {
     let msg = m.content.trim();
     let arr = msg.split(" ")[0];
     if (!isInt(arr)) return;
-    if (amount < 8){
+    if (amount < max){
     if (arr > num) {
       amount++;
       m.channel.send("That's too high! Try again!");
@@ -923,7 +935,7 @@ msg.channel.send("\`\`\`xl\n" + arr2.join("\n") + "\n\n" + arr.join("\n") + "\n\
       collector.stop();
     }
   }
-  if (amount === 8) {
+  if (amount === max) {
     collector.stop();
     m.channel.send("That's too bad! The number was " + num);
   }
