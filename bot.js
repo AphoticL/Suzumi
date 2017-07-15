@@ -914,11 +914,12 @@ msg.channel.send("\`\`\`xl\n" + arr2.join("\n") + "\n\n" + arr.join("\n") + "\n\
   let num = randomInt(1, max);
   console.log(num);
   let collector = msg.channel.createCollector(m => m);
-  msg.channel.send("You have 8 chances! Guess the number correctly and you win!");
+  
   let win = false,
   amount = 0;
-	let max = (extremeflag) ? 12 : 8;
+	max = (extremeflag) ? 12 : 8;
 	if (hardtwist) max = max - 3;
+	msg.channel.send("You have " + max + " chances! Guess the number correctly and you win!");
   collector.on('collect' , ((m) => {
     let msg = m.content.trim();
     let arr = msg.split(" ")[0];
