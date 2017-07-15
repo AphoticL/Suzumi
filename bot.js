@@ -1,1002 +1,455 @@
-const Discord = require("discord.js");
-const bot = new Discord.Client();
-const prefix = "/";
-const fs = require("fs");
-const filename = "./config_n.json";
-const file = require(filename);
-const yt = require("ytdl-core");
-const readline = require('readline');
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  prompt: 'Suzumi > '
-});
-const exec = require('child_process').exec;
-var path = require('path');
-var colstr = (`"red"
-'darkred'
-'salmon'
-"orange"
-"brown"
-'peach'
-"yellow"
-"khaki"
-"viridian"
-"olive"
-"green"
-"darkgreen"
-'lightgreen'
-"turquoise"
-"seagreen"
-'aquamarine'
-"cyan"
-"teal"
-'lightcyan'
-"sky"
-"navy"
-'lightsky'
-"blue"
-"darkblue"
-'lightblue'
-"purple"
-"indigo"
-'lightpurple'
-"pink"
-"darkmagenta"
-'lightpink'
-"magenta"
-"maroon"
-'fuchsia'
-"black"
-'gray/grey'`);
-/*const objn = ("./gamble.json");
-var obj = require(objn);**/
-/*var players = [];
-var playerid = [];**/
-let queue = {};
-let tokens = {
-  "prefix" : "/",
-  "passes" : 1,
-  "speak": 148577578146332672
-};
+'use strict';
 
-// STARTUP
-var date = new Date();
-var bdname = "./json/bd.json";
-var bd = require(bdname);
-var bdarr = [];
-var d = new Date(2017,0,24);
-var curtime = d.getTime();
 
-bot.on('ready', () =>{
+/*
+========= TO LEGACYY ==========
 
-  console.log("ready");
-  var day = date.getDate(),
-		month = date.getMonth() + 1;
-	console.log(`Today is ${day}\/${month}!`);
-	for (let key in bd){
-		if (bd.hasOwnProperty(key)){
-			console.log("Logged " + bd[key]['name']);
-			if ((bd[key]['day'] == day)&&(bd[key]['month'] == month)){
-			console.log(bd[key]['name'] + "'s birthday is today!");
-			bdarr.push(bd[key]['name']);
-			}
-		}
-	}
-  console.log(bdarr.join("\n"));
-  console.log("/switch 234586311191822336");  // /switch 148577578146332672
-  rl.setPrompt('Suzumi> ');
-  rl.prompt();
-  rl.on('line', (input) => {
-    if (input === 'rs') return;
-    if (input.startsWith("/switch")){
-      tokens.speak = input.split("/switch ").slice(1)[0];
-      console.log("Speaking at " + tokens.speak);
-  } else {
-    try {
-    bot.channels.get(`${tokens['speak']}`).send(`${input}`);
-  } catch(e) {
-    console.log(e);
-  }
-  }
-    rl.prompt();
-});
-});
-//var end;
-// COMMANDS
-const commands = {"ping": (msg) => {
-   var start = new Date();
-  msg.channel.send(`Pong.`);
- var end = new Date() - start;
-  msg.channel.send(`\`Took: ${end}ms\``);
-},
-wolfram : (msg, lang) => {
-    var download = function(url, dest, cb) {
-    var file = fs.createWriteStream(dest);
-    var request = http.get(url, function(response) {
-         response.pipe(file);
-         file.on('finish', function() {
-         file.close(cb);  // close() is async, call cb after close completes.
-    });
-  }).on('error', function(err) { // Handle errors
-    fs.unlink(dest); // Delete the file async. (But we don't check the result)
-    if (cb) cb(err.message);
-  });
-};
+Please update the Discord.js module
+to its latest version!
 
-    let wolfram = require('wolfram').createClient('H6QA6L-WJ75WJ8VHE');
-    let q = msg.content.split(" ").slice(1).join(" ");
-    const http = require('http');
-    let f = [],
-    files = [];
-    wolfram.query(q, (err, result) => {
-        if (err) return console.log(err);        
-        for (var i in result){
-            download(result[i].subpods[0].image, `pics/${i}.jpg`);
-            f.push(i);
-            ///console.log(files);
-        }
-        //bubbleSort(f);
-        console.log(f);
-        for (let i = 0; i < f.length; i++){
-            files.push(`pics/${i}.jpg`);
-        }
-        console.log(files);
-          setTimeout(() => {
-            msg.channel.send({files});
-          }, 2000);
-    });     
- },
-"rs": (msg) => {
-  exec('cd C:\\Users\\Administrator\\Documents\\GitHub\\Suzumi', (error, stdout, stderr) => {
-  if (error) {
-    console.error(`exec error: ${error}`);
-    return;
-  }
-  console.log(`stdout: ${stdout}`);
-  console.log(`stderr: ${stderr}`);
-});
-  exec('forever restartall', (error, stdout, stderr) => {
-  if (error) {
-    console.error(`exec error: ${error}`);
-    return;
-  }
-  console.log(`stdout: ${stdout}`);
-  console.log(`stderr: ${stderr}`);
-});
-exec('pause', (error, stdout, stderr) => {
-if (error) {
-  console.error(`exec error: ${error}`);
-  return;
-}
-console.log(`stdout: ${stdout}`);
-console.log(`stderr: ${stderr}`);
-});
-},
-"stopall": (msg) => {
-  if (msg.author.id != '197733648403791872') return msg.channel.send("Forbidden.");
-  exec('cd C:\\Users\\Administrator\\Documents\\GitHub\\Suzumi', (error, stdout, stderr) => {
-  if (error) {
-    console.error(`exec error: ${error}`);
-    return;
-  }
-  console.log(`stdout: ${stdout}`);
-  console.log(`stderr: ${stderr}`);
-});
-  exec('forever stopall', (error, stdout, stderr) => {
-  if (error) {
-    console.error(`exec error: ${error}`);
-    return;
-  }
-  console.log(`stdout: ${stdout}`);
-  console.log(`stderr: ${stderr}`);
-});
-exec('pause', (error, stdout, stderr) => {
-if (error) {
-  console.error(`exec error: ${error}`);
-  return;
-}
-console.log(`stdout: ${stdout}`);
-console.log(`stderr: ${stderr}`);
-});
-},
-  "play": (msg) => {
-    if (msg.author == bot.user) return;
-  if (queue[msg.guild.id] === undefined) return msg.channel.send(`Add some songs to the queue first with ${tokens.prefix}add`);
-  if (!msg.guild.voiceConnection) return commands.join(msg).then(() => commands.play(msg));
-  if (queue[msg.guild.id].playing) return msg.channel.send("Already Playing");
-  let dispatcher;
-  queue[msg.guild.id].playing = true;
+run:
 
-  console.log(queue);
-  (function play(song) {
+npm install discord.js --save
+===============================
+*/
 
-    let arr = msg.member.voiceChannel.members.array();
-    console.log(arr.length-1);
-    if (arr.length-1 < 1) msg.member.voiceChannel.leave();
+const Discord = require('discord.js'),
+bot = new Discord.Client(),
+fs = require('fs'),
+datadir = "./users";
+// )
 
-    console.log(song);
-    if (song === undefined) return msg.channel.send("Queue is empty").then(() => {
-      queue[msg.guild.id].playing = false;
-      msg.member.voiceChannel.leave();
-    });
-    msg.channel.send(`Playing: **${song.title}** as requested by: **${song.requester}**`);
-    dispatcher = msg.guild.voiceConnection.playStream(yt(song.url, { audioonly: true }), { passes : tokens.passes });
-    let collector = msg.channel.createCollector(m => m);
-    collector.on('message', m => {
-      if (m.content.startsWith(tokens.prefix + 'pause')) {
-        if (arr.length-1 < 1) msg.member.voiceChannel.leave();
-        if (msg.author == bot.user) return;
-msg.channel.send('It\'s pretty fun; why\'d you pause that..?').then(() => {
-  dispatcher.pause();
-});
-      } else if (m.content.startsWith(tokens.prefix + 'resume')){
-        if (arr.length-1 < 1) msg.member.voiceChannel.leave();
-        if (msg.author == bot.user) return;
-msg.channel.send('owo)').then(() => {
-  dispatcher.resume();
-});
-      } else if (m.content.startsWith(tokens.prefix + 'skip')){
-        if (arr.length-1 < 1) msg.member.voiceChannel.leave();
-        if (msg.author == bot.user) return;
-msg.channel.send('Skipped').then(() => {
-  dispatcher.end();
-});
-      } else if (m.content.startsWith('/volume')){
-        if (arr.length-1 < 1) msg.member.voiceChannel.leave();
-        if (msg.author == bot.user) return;
-        // dispatcher volume * 50 : Actaul value
+bot.login('MzA2NTYwODk1NTA3NjI4MDQy.DEFJRw.HWt9BAJEKqpJGx7pbZiHZlD-hbA');
 
-        let args = m.content.split(' ').slice(1);
-        if (args[0] < 101){
-dispatcher.setVolume(Math.min((args[0])/50));
-msg.channel.send(`Volume: ${Math.round(dispatcher.volume*50)}%`);
-} else {
-  msg.channel.send("IT'S TOO LOUDDD!! (Please don't go overboard with this command -w-)");
-}
-      }
-       else if (m.content.startsWith(tokens.prefix + 'time')){
-         if (arr.length-1 < 1) msg.member.voiceChannel.leave();
-msg.channel.send(`time: ${Math.floor(dispatcher.time / 60000)}:${Math.floor((dispatcher.time % 60000)/1000) <10 ? '0'+Math.floor((dispatcher.time % 60000)/1000) : Math.floor((dispatcher.time % 60000)/1000)}`);
-      }
-    });
-    dispatcher.on('end', () => {
-      collector.stop();
-      queue[msg.guild.id].songs.shift();
-      play(queue[msg.guild.id].songs[0]);
-    });
-    dispatcher.on('error', (err) => {
-      return msg.channel.send('error: ' + err).then(() => {
-collector.stop();
-queue[msg.guild.id].songs.shift();
-play(queue[msg.guild.id].songs[0]);
+const commands = {
+  '+rep' : (msg) => {
+    try{
+    let arr = msg.content.split(" ").slice(1);
+    if (!arr[0]) return msg.channel.send("Please specify the target user by a mention.");
+    let feedback = arr.join(" ").split(" ").slice(1).join(" ");
+    if (!feedback) feedback = "None.";
+
+    let user = msg.mentions.users.first();
+      if (user.id == msg.author.id) return msg.channel.send(`${msg.author}, you can't add a reputation point to yourself.`);
+      var file = require("./users/" + user.id + ".json");
+      console.log(file);
+      file["plus"] = file["plus"] + 1;
+      file["feedback"].push(feedback);
+      file["last"].push("plus");
+
+      fs.writeFile(("./users/" + user.id + ".json"), JSON.stringify(file, null, 2), (err) => {
+        if (err) throw err;
+        console.log(JSON.stringify(file, null, 2));
       });
-    });
-  })(queue[msg.guild.id].songs[0]);
-},
-'join': (msg) => {
-  if (msg.author == bot.user) return;
-  return new Promise((resolve, reject) => {
-    const voiceChannel = msg.member.voiceChannel;
-    if (!voiceChannel || voiceChannel.type !== 'voice') return msg.reply('I couldn\'t connect to your voice channel...');
-    voiceChannel.join().then(connection => resolve(connection)).catch(err => reject(err));
+
+      showData(msg, user, 'plus');
+    } catch (e) {
+      msg.channel.send("A problem occured while processing. Did you make any mistakes typing the command?");
+      console.error(e);
+    }
+    },
+  '-rep' : (msg) => {
+    try{
+    let arr = msg.content.split(" ").slice(1);
+    if (!arr[0]) return msg.channel.send("Please specify the target user by a mention.");
+    let feedback = arr.join(" ").split(" ").slice(1).join(" ");
+    if (!feedback) feedback = "None.";
+
+    let user = msg.mentions.users.first();
+    if (user.id == msg.author.id) return msg.channel.send(`${msg.author}, you can't deduce a reputation point from yourself.`);
+    var file = require("./users/" + user.id + ".json");
+    console.log(file);
+    file["minus"] = file["minus"] + 1;
+    file["feedback"].push(feedback);
+    file["last"].push("minus");
+
+  fs.writeFile(("./users/" + user.id + ".json"), JSON.stringify(file, null, 2), (err) => {
+    if (err) throw err;
+    console.log(JSON.stringify(file, null, 2));
   });
-},
-'add': (msg) => {
-  if (msg.author == bot.user) return;
-  try{
-  let url = msg.content.split(' ')[1];
-  if (url == '' || url === undefined) return msg.channel.send(`You must add a url, or youtube video id after ${tokens.prefix}add`);
-  yt.getInfo(url, (err, info) => {
-    if(err) return msg.channel.send('Invalid YouTube Link: ' + err);
-    if (!queue.hasOwnProperty(msg.guild.id)) queue[msg.guild.id] = {}, queue[msg.guild.id].playing = false, queue[msg.guild.id].songs = [];
-    queue[msg.guild.id].songs.push({url: url, title: info.title, requester: msg.author.username});
-    msg.channel.send(`Added **${info.title}** to the queue. Anything else?`);
-  });
-}catch(e){
-  console.log(e);
-  msg.channel.send("That's an invalid YouTube link. Please try again.");
-}
-},
-'queue': (msg) => {
-  if (queue[msg.guild.id] === undefined) return msg.channel.send(`Add some songs to the queue first with ${tokens.prefix}add`);
-  let tosend = [];
-  queue[msg.guild.id].songs.forEach((song, i) => { tosend.push(`${i+1}. ${song.title} - Requested by: ${song.requester}`);});
-  msg.channel.send(`__**${msg.guild.name}'s Music Queue:**__ Currently **${tosend.length}** songs queued ${(tosend.length > 15 ? '*[Only next 15 shown]*' : '')}\n\`\`\`${tosend.slice(0,15).join('\n')}\`\`\``);
-},
 
-'help': (msg) => {
-  let args = msg.content.split(" ").slice(1),
-  resstr;
-  if (!args[0]) return msg.channel.send(`\`\`\`xl
-==VOICE CHAT COMMANDS==
-/join
-/add
-/queue
-/play
-/pause
-/resume
-/skip
-/time
-/volume
-
-==NON VC COMMANDS==
-/color or /colour
-/d
-/event
-/spell
-/bd
-(Type /help followed by the command's name for extra data)\`\`\``);
-  // BEGINNING SWITCH SEQ
-  switch(args[0].toLowerCase()){
-    case 'voice':
-      resstr = (`\`\`\`xl
-/join : "Join Voice channel of msg sender"
-/add : "Add a valid youtube link to the queue"
-/queue : "Shows the current queue, up to 15 songs shown."
-/play : "Play the music queue if already joined to a voice channel"
-/pause : "Pauses the music"
-/resume : "Resumes the music"
-/skip : "Skips the playing song"
-/time : "Shows the playtime of the song."
-/volume : "Adjust the intensity of the song."\`\`\``);
-      break;
-    case 'color':
-    case 'colour':
-      resstr = "Type /color or /colour followed by the color you want to change your name's color. I'll inform you if the color you want is not in my store. Type /remove if you desire to wash your color off.";
-      break;
-    case 'd':
-      resstr = "Pray to RNGsus here. Type a certain character's name and see what happens";
-      break;
-    case 'event':
-      resstr = "Make your own sub-event! Syntax: /event [color] [text(,text2,text3,text4)";
-      break;
-    case 'spell':
-      resstr = "Make your own spellcard! Type the name after this command and see what happens!";
-      break;
-    case 'bd':
-      resstr = "Do you want Suzumi to remind you of your birthday? Use this command. Syntax will be listed inside.";
-      break;
-  }
-    msg.channel.send(resstr);
-},
-'reboot': (msg) => {
-  if (msg.author.id == tokens.adminID) process.exit(); //Requires a node module like Forever to work.
-},
-
-'color' : (msg) => {
-
-  var args = msg.content.split(" ").slice(1);
-  let col = args[0];
-  if (col == null) {
-    msg.channel.send("\*grabs paint bucket + brush\*");
-    setTimeout(function(){
-      msg.channel.send("If you want to make me paint your name, type [/color] followed by the color you want.");
-      setTimeout(function(){
-msg.channel.send(`The list of the paint I got is the following:
-  \`\`\`xl
-  ${colstr}
-    \`\`\`  `);
-      },3000);
-    },2000);
-  } else {
-  try{
-  let colre = col.toLowerCase();
-  if (colre === 'grey') colre = 'gray';
-let colvar = parseInt((file[colre]["value"]), 16);
-  msg.member.roles.filter( (role) => {
-    if(role.name.startsWith("c_")){
-      msg.member.removeRole(role);
-    }});
-
-    console.log(`${msg.author.username}`);
-    console.log(col);
-    console.log(colre);
-    console.log(colvar);
-
-      if(msg.guild.roles.exists('name', `c_${colre}`))
-      msg.guild.roles.filter( role => {
-if(role.name.startsWith(`c_${colre}`)){
-  msg.member.addRole(role).then( () => {msg.channel.send("Your name is now painted! Fancy, huh?");});
-}
-      });
-      else {
-  msg.guild.createRole({
-      name : "c_" + colre,
-      color : `${colvar}`,
-      postition : 1,
-      permissions: [
-        "CREATE_INSTANT_INVITE",
-        "ADD_REACTIONS", // add reactions to messages
-        "READ_MESSAGES",
-        "SEND_MESSAGES",
-        "CONNECT", // connect to voice
-        "SPEAK", // speak on voice
-        "CHANGE_NICKNAME"
-      ]
-    }).then(role => msg.member.addRole(role).then( () => msg.channel.send("Your name is now painted with a fresh batch of color! Fancy, huh?")));
-}
+  showData(msg, user, 'minus');
 } catch (e) {
-    if (e != "TypeError: msg.guild.roles.filter(...).then is not a function"){
-      msg.channel.send(`Someone stole my color buckets ;w; So here's the list of the paint I got right now:
-\`\`\`xl
-${colstr}\`\`\`    `);
-  }
+  msg.channel.send("A problem occured while processing. Did you make any mistakes typing the command?");
+  console.error(e);
 }
-}
-},
-'remove' : (msg) => {
-  msg.member.roles.filter( (role) => {
-    if(role.name.startsWith("c_")){
-      msg.member.removeRole(role);
-      let rep = ["That's pretty tricky washing that off. Turns out it needed more than just water...",
-    "Let's just say it's sticky. Anyways, it's done",
-    "It smells...weird...but anyways!"];
-    let i = randomInt(0, (rep.length-1));
-
-      msg.reply(rep[i]);
-}});
-},
-'colour' : (msg) => {
-  var args = msg.content.split(" ").slice(1);
-  let col = args[0];
-  if (col == null) {
-    msg.channel.send("\*grabs paint bucket + brush\*");
-    setTimeout(function(){
-      msg.channel.send("If you want to make me paint your name, type [/color] followed by the color you want.");
-      setTimeout(function(){
-msg.channel.send(`The list of the paint I got is the following:
-  \`\`\`xl
-
-  ${colstr}
-  \`\`\`    `);
-      },3000);
-    },2000);
-  } else {
-  try{
-  let colre = col.toLowerCase();
-let colvar = parseInt((file[colre]["value"]), 16);
-  msg.member.roles.filter( (role) => {
-    if(role.name.startsWith("c_")){
-      msg.member.removeRole(role);
-    }});
-    console.log(`${msg.author.username}`);
-    console.log(col);
-    console.log(colre);
-    console.log(colvar);
-      if(msg.guild.roles.exists('name', `c_${colre}`))
-      msg.guild.roles.filter( role => {
-if(role.name.startsWith(`c_${colre}`)){
-  msg.member.addRole(role).then( () => {msg.channel.send("Your name is now painted! Fancy, huh?");});
-}
-      });
-      else {
-  msg.guild.createRole({
-      name : "c_" + colre,
-      color : `${colvar}`,
-      postition : 1,
-      permissions: [
-        "CREATE_INSTANT_INVITE",
-        "ADD_REACTIONS", // add reactions to messages
-        "READ_MESSAGES",
-        "SEND_MESSAGES",
-        "CONNECT", // connect to voice
-        "SPEAK", // speak on voice
-        "CHANGE_NICKNAME"
-      ]
-    }).then(role => msg.member.addRole(role).then( () => msg.channel.send("Your name is now painted with a fresh batch of color! Fancy, huh?")));
-}
-} catch (e) {
-    if (e != "TypeError: msg.guild.roles.filter(...).then is not a function"){
-      msg.channel.send(`Someone stole my color buckets ;w; So here's the list of the paint I got right now:
-\`\`\`xl
-
-${colstr}
-\`\`\`    `);
-  }
-}
-}
-},
-
-'d' : (msg) => {
-  let args = msg.content.split(" ").slice(1);
-  let d = args[0];
-  let check = isInt(d);
-  let ins = ["Is that \*\*really\*\* a \*\*\*REAL\*\*\* number?", "How am I supposed to do that!? B-Baka...",  "Having fun?", "Totally doable.", "Legit 100\%", "I'll stab you if you do it again, I swear."];
-  if (d == null){
-    msg.channel.send("Feelin' lucky? Type /d followed by a number and see what happens.");
-  } else {
-    if (check === true){
-  let num = randomInt(1, d);
-  let per = Math.floor((num / d) * 100);
-  let lo = ["Xeno a? What have you done?!", "Bless RNG.", "Pathetic.", "Xeno a, stop messing with it!"];
-  if (per > 30){
-
-  msg.channel.send("You rolled a " + num + ". How was it?");
-} else if (per <= 30 ) {
-  msg.channel.send("You rolled a " + num + ". Uh...");
-  setTimeout(function(){
-    let num = Math.round(Math.random() * (lo.length - 1) + 1);
-    msg.channel.send(lo[num]);
-  }, 2000);
-}
-} else if (d != "Xeno") {
-  let num = randomInt(1,ins.length);
-  msg.channel.send(ins[num]);
-} else if ((d.toLowerCase() == "xeno") && ((args[1] == "a") || args[1] == "A")){
-  msg.channel.send("Calling out to the god of RNG themselves isn't going to give you any good.");
-}
-}
-},
-'eval' : (msg) => {
-  var col,
-  inp = msg.content.split(" ").slice(1).join(" "),
-  out;
-  try {
-    out = eval(inp);
-    col = 0x00ff00;
-  } catch (e) {
-    out = e;
-    if (out == e) col = 0xff0000;
-  }
-  if (msg.author.id !== ('197733648403791872')) return msg.channel.send("I won't let anyone except my master to use this...\n(To prevent unauthorized shutdown, this command is locked to Yuugen only.)");
-  const embed = new Discord.RichEmbed()
-  .setTitle('Evaluation Results')
-  .addField('\u200b', '\u200b', true)
-  /*
-   * Alternatively, use '#00AE86', [0, 174, 134] or an integer number.
-   */
-  .setColor(col)
-  /*
-   * Takes a Date object, defaults to current date.
-   */
-  .setTimestamp()
-  .addField('Eval Input', (`\`\`\`${inp}\`\`\``))
-  /*
-   * Inline fields may not display as inline if the thumbnail and/or image is too big.
-   */
-  .addField('Eval Output', (`\`\`\`${out}\`\`\``), true);
-
-msg.channel.send({embed});
-
-},
-
-'say' : (msg) => {
-
-  msg.delete();
-  let args = msg.content.split(" ").slice(1);
-
-  msg.channel.send(`${msg.author.username} >> ${args.join(" ")}`);
-},
-'event' : (msg) => {
- // One line contains 23 letters w/o an i
- /*
-
- **/
-    var Canvas = require('canvas')
-      , Image = Canvas.Image;
-    if (msg.channel.name != 'bot-spam') return msg.channel.send("You're not allowed to use it here! Go to bot-spam instead.");
-    let check = msg.content.split(" ").slice(1)[0];
-    if (!check) return msg.channel.send("Want to make a sub-event of your own? Use this command followed by the color, then your texts. Be sure to add a comma to separate your words if you want to make a new line!");
-
-  if (!msg.content.includes(",")){
-      try{
-        var imgdir;
-          let test = msg.content.split(" ").slice(1);
-          let col = test[0];
-          switch(col.toLowerCase()){
-            case 'red':
-              imgdir = '1';
-              break;
-            case 'yellow':
-            imgdir = '11';
-            break;
-            case 'purple':
-            imgdir = '21';
-            break;
-            default:
-            return msg.channel.send("Invalid Color.");
-          }
-          test = msg.content.split(" ").slice(2);
-          var canvas = new Canvas(300, 40);
-          var ctx = canvas.getContext('2d');
-          var img;
-          img = new Image;
-          console.log(`${msg.author.username} sent ${test.join(" ").trim()}`);
-          img.src = (__dirname + '/image/' + imgdir + '.png');
-          ctx.drawImage(img, 0, 0);
-
-          ctx.fillStyle = 'white';
-          ctx.font = '25px Impact';
-          ctx.textAlign = "center";
-          ctx.fillText(test.join(" ").trim(), (canvas.width / 2), ((canvas.height / 2)+10));
-
-          var f = canvas.toBuffer();
-          msg.channel.sendFile(f);
-      } catch (e) {
-          console.log(e);
-      }
-  }
-  else {
-      let args = msg.content.split(" ").slice(1);
-      var col = args[0];
-      if ((col.toLowerCase() !== 'red')&&(col.toLowerCase() !== 'yellow')&&(col.toLowerCase() !== 'purple')) return msg.channel.send("Invalid Color. You can only use Red, Yellow or Purple.");
-      let targs = msg.content.split(" ").slice(2).join(" ").split(",");
-      img = new Image;
-      let l = targs.length;
-      canvas = new Canvas(300, (40 * l));
-      ctx = canvas.getContext('2d');
-      ctx.textAlign = "center";
-      ctx.font = '25px Impact';
-      ctx.fillStyle = 'white';
-      if (l.length > 4) return msg.channel.send("Too much text!");
-      if (col.toLowerCase() == 'red'){
-      switch(l){
-          case 2:
-              img.src = (__dirname + '/image/2.png');
-              ctx.drawImage(img, 0, 0);
-              ctx.fillText(targs[0].trim(), 150, 30);
-              ctx.fillText(targs[1].trim(), 150, 70);
-              console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
-              break;
-          case 3:
-              img.src = (__dirname + '/image/3.png');
-              ctx.drawImage(img, 0, 0);
-              ctx.fillText(targs[0].trim(), 150, 30);
-              ctx.fillText(targs[1].trim(), 150, 70);
-              ctx.fillText(targs[2].trim(), 150, 110);
-              console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
-              break;
-
-          case 4:
-              img.src = (__dirname + '/image/4.png');
-              ctx.drawImage(img, 0, 0);
-              ctx.fillText(targs[0].trim(), 150, 30);
-              ctx.fillText(targs[1].trim(), 150, 70);
-              ctx.fillText(targs[2].trim(), 150, 110);
-              ctx.fillText(targs[3].trim(), 150, 150);
-              console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
-              break;
-          default:
-              return msg.channel.send('Invalid Syntax!');
-      }
-      f = canvas.toBuffer();
-      msg.channel.sendFile(f);
-    } else if (col.toLowerCase() == 'yellow'){
-    switch(l){
-        case 2:
-            img.src = (__dirname + '/image/12.png');
-            ctx.drawImage(img, 0, 0);
-            ctx.fillText(targs[0].trim(), 150, 30);
-            ctx.fillText(targs[1].trim(), 150, 70);
-            console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
-            break;
-        case 3:
-            img.src = (__dirname + '/image/13.png');
-            ctx.drawImage(img, 0, 0);
-            ctx.fillText(targs[0].trim(), 150, 30);
-            ctx.fillText(targs[1].trim(), 150, 70);
-            ctx.fillText(targs[2].trim(), 150, 110);
-            console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
-            break;
-
-        case 4:
-            img.src = (__dirname + '/image/14.png');
-            ctx.drawImage(img, 0, 0);
-            ctx.fillText(targs[0].trim(), 150, 30);
-            ctx.fillText(targs[1].trim(), 150, 70);
-            ctx.fillText(targs[2].trim(), 150, 110);
-            ctx.fillText(targs[3].trim(), 150, 150);
-            console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
-            break;
-        default:
-            return msg.channel.send('Invalid Syntax!');
-
-  }
-  f = canvas.toBuffer();
-  msg.channel.sendFile(f);
-}
-   else if (col.toLowerCase() == 'purple'){
-  switch(l){
-      case 2:
-          img.src = (__dirname + '/image/22.png');
-          ctx.drawImage(img, 0, 0);
-          ctx.fillText(targs[0].trim(), 150, 30);
-          ctx.fillText(targs[1].trim(), 150, 70);
-          console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
-          break;
-      case 3:
-          img.src = (__dirname + '/image/23.png');
-          ctx.drawImage(img, 0, 0);
-          ctx.fillText(targs[0].trim(), 150, 30);
-          ctx.fillText(targs[1].trim(), 150, 70);
-          ctx.fillText(targs[2].trim(), 150, 110);
-          console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
-          break;
-
-      case 4:
-          img.src = (__dirname + '/image/24.png');
-          ctx.drawImage(img, 0, 0);
-          ctx.fillText(targs[0].trim(), 150, 30);
-          ctx.fillText(targs[1].trim(), 150, 70);
-          ctx.fillText(targs[2].trim(), 150, 110);
-          ctx.fillText(targs[3].trim(), 150, 150);
-          console.log(`${msg.author.username} sent ${targs.join(",").trim()}`);
-          break;
-      default:
-          return msg.channel.send('Invalid Syntax!');
-  }
-  f = canvas.toBuffer();
-  msg.channel.sendFile(f);
-}
-}
-},
- 'spell' : (msg) => {
-   var Canvas = require('canvas')
-  , image = new Canvas.Image
-  , opentype = require('opentype.js');
-  var fs = require('fs');
-  var path = require('path');
-  //var Font = Canvas.Font;
-
-/*if (!Font) {
-  throw new Error('Need to compile with font support');
-}
-function fontFile (name) {
-  return path.join(__dirname, '/font/', name);
-}
-/*var qFont = new Font('Quark-Light', fontFile('Quark-Light.otf'));
-qFont.addFace(fontFile('Quark-Bold.otf'), 'normal', 'bold');*/
-   if (msg.channel.name != 'bot-spam') return msg.channel.send("You're not allowed to use it here! Go to bot-spam instead.");
-
-   let check = msg.content.split(" ").slice(1)[0];
-   let args = msg.content.split(" ").slice(1);
-   if (!check) return msg.channel.send(`Want to make a card of your own, ${msg.author}? use [/spell] follow by the name you want! Use sparingly.`);
-       var canvas = new Canvas(255,44);
-       var ctx = canvas.getContext('2d');
-       image.src = (__dirname + '/image/spell.png');
-       ctx.drawImage(image, 0, 0);
-       ctx.textAlign = 'end';
-       //ctx.addFont(qFont);
-       ctx.fillStyle = 'white';
-       ctx.font = '12px Arial';
-       // fillText(text, x, y)
-       // font.draw(ctx, text, x, y, fontSize, options)
-       // font.draw(ctx, args.join(" "), 238, 29, 12);
-       ctx.fillText(args.join(" "), 238, 29);
-       let f = canvas.toBuffer();
-       msg.channel.sendFile(f);
- },
- 'bd': (msg) => {
-   var date = new Date();
-   console.log("Command");
-   var day = date.getDate(), month = date.getMonth() + 1;
-   let args = msg.content.split(" ").slice(1);
-   if (args[0] === undefined) return msg.channel.send(`\`\`\`xl
-LIST OF BIRTHDAY COMMANDS:
-add: "Add your birthday to make Suzumi remind you of your birthday."
-Syntax: /bd add dd/mm
-check: "Check if anyone got a birthday today!"
-Syntax: /bd check \`\`\``);
-  if (args[0] == 'add'){
-    console.log(args[1]);
-    if (!args[1]) return msg.channel.send("Please include your date in dd/mm format");
-    let date = args[1].split("/");
-    console.log(msg.author.username);
-    let name = msg.author.username;
-    var bd = require(bdname);
-    Object.defineProperty(bd, name, {
-  value: {
-    'name' : name,
-    'day': date[0],
-    'month': date[1]
   },
-  writable: true,
-  enumerable: true,
-  configurable: true
+  '!rep' : (msg) => {
+    let user = msg.mentions.users.first();
+    if (!user) return msg.channel.send("Please specify the target user by a mention.");
+    showData(msg, user, 'check');
+  },
+  '/dataflush' : (msg) => {
+    var i = 0,
+    j = 0;
+    if (msg.author.id != 197733648403791872) return msg.channel.send("Command limited to bot owner only.");
+    msg.guild.fetchMembers().then((guild) => {
+      var arr = guild.members.keyArray();
+      var olddata = require(`./user/${arr[i]}.json`)
+      var p = ".";
+      var keyarr = guild.members.array();
+      for (i = 0; i < arr.length; i++){
+        /*var data = {
+          "name" : (`${keyarr[i].user.username}`),
+          "plus" : 0,
+          "minus" : 0,
+          "feedback" : [p,p,p,p,p],
+          "last" : []
+        };**/
+        fs.writeFile((`./users/${msg.guild.id}/${arr[i]}.json`), JSON.stringify(olddata, null, 2), (err) => {
+          if (err) throw err;
+          console.log(JSON.stringify(data, null, 2));
+        });
+        j = i;
+      }
+    });
+    setTimeout(function(){
+    const embed = new Discord.RichEmbed()
+    .setTitle('Database refresh results')
+    //.addField('\u200b', '\u200b', true)
+    /*
+     * Alternatively, use '#00AE86', [0, 174, 134] or an integer number.
+     */
+    .setColor(0x00FF00)
+    /*
+     * Takes a Date object, defaults to current date.
+     */
+    .setTimestamp()
+    .addField('\u200b', (`Logged \`\`\`${j}\`\`\` users.`));
+
+  msg.channel.send({
+    embed,
+  });
+}, 2000);
+},
+  '/undo' : (msg) => {
+    var user, id, flag;
+    if (msg.content === 'undo') flag = false;
+    else flag = true;
+    try {
+    user = msg.mentions.users.first;
+    id = msg.mentions.users.first().id;
+  } catch (e) {
+    if (!user || !id) return msg.channel.send("Please specify the member you want to clear their last reputation change.");
+  }
+    var _flag = false;
+   msg.member.roles.filter( (role) => {
+      console.log(role.name);
+      if(role.name == "Staff member"){
+        _flag = true;
+      }});
+
+      if (_flag === false) return msg.channel.send("You do not have permission to issue this command!");
+      //console.log(id);
+      var dir = ("./users/" + id + ".json");
+      var dirobj = require(dir);
+      let type = dirobj.last[dirobj.last.length - 1];
+
+      if (type === "plus"){
+        dirobj["plus"] = dirobj["plus"] - 1;
+      } else if (type === "minus") {
+        dirobj["minus"] = dirobj["minus"] - 1;
+      } else {
+        return;
+      }
+      dirobj["last"] = dirobj["last"].slice(0, -1);
+      dirobj["feedback"] = dirobj["feedback"].slice(0, -1);
+
+      user = msg.mentions.users.first();
+      console.log(user.id);
+
+      fs.writeFile((`./users/${user.id}.json`), JSON.stringify(dirobj, null, 2), (err) => {
+        if (err) return console.error(err);
+        console.log(JSON.stringify(dirobj, null, 2));
+      });
+      if (flag === false)showData(msg, user, 'check');
+  },
+  '/massundo' : (m) => {
+    var _flag = false;
+    m.member.roles.filter( (role) => {
+      console.log(role.name);
+      if(role.name == "Staff member"){
+        _flag = true;
+      }});
+    if (_flag == false) return m.channel.send("Sudo Commands are limited to Staffs only.");
+
+    let user = m.mentions.users.first();
+    if (!user) return m.channel.send("Please specify the target user by a mention.");
+    let arr = m.content.split(" ").slice(2);
+    if (!arr) return m.channel.send("Please specify the amount of undos");
+    if (isInt(arr) === false) return m.channel.send("That's not an integer.");
+    for (var i = 0; i < arr; i++){
+    commands['/undo'](m);
+  }
+    showData(m, user, 'check');
+  },
+  '/unmute' : (m) => {
+      var _flag = false;
+      m.member.roles.filter( (role) => {
+      console.log(role.name);
+      if(role.name == "Staff member"){
+        _flag = true;
+      }});
+    if (_flag == false) return m.channel.send("Staff Commands are limited to Staffs only.");
+
+      let user = m.mentions.users.first();
+      if (!user) return m.channel.send("Please specify the target user by a mention.");
+      let id = user.id;
+      m.guild.fetchMember(id).then((member) => {
+      m.guild.roles.filter( role => {
+        if(role.name == "Muted"){
+          member.removeRole(role).then(() => console.log('done'));
+        }});
+      let embed = new Discord.RichEmbed()
+
+      .setTitle('Moderator Action: Unmute.')
+      //.addField('\u200b', '\u200b', true)
+      .setColor(0xff0077)
+      .setTimestamp()
+      .addField('User', (`${member.user.tag}`), true)
+      .addField('Moderator Responsible', (`${m.author.tag}`), true);
+
+      bot.channels.get('313005765184978954').send({embed});
+  });
+
+},
+  '/mute' : (m) => {
+    // Syntax: staff --mute @mention [time in minutes] [reason]
+      var _flag = false;
+      m.member.roles.filter( (role) => {
+        console.log(role.name);
+        if(role.name == "Staff member"){
+          _flag = true;
+        }});
+      if (_flag == false) return m.channel.send("Staff Commands are limited to Staffs only.");
+
+      let user = m.mentions.users.first();
+      if (!user) return m.channel.send("Please specify the target user by a mention.");
+      let time;
+      let arr = m.content.split(" ").slice(2);
+      time = ((arr[0]) && isInt(arr[0])) ? (arr[0] * 60000) : 300000;
+      console.log(time);
+      let reason = (function(){
+        // /mute @mention
+        if (!(arr[0])) return "No reason specified";
+        if ((!isInt(arr[0]) && (arr[0]))) return arr.join(" ");
+        else return (arr[1]) ? arr.join(" ").split(" ").slice(1).join(" ") : "No reason specified";
+      })();
+      //console.log(4);
+      let id = user.id;
+      m.guild.fetchMember(id).then((member) => {
+        //console.log(5);
+        m.guild.roles.filter( role => {
+
+          if(role.name.toLowerCase() == "muted"){
+            member.addRole(role).then( () => {
+              //console.log(6);
+              let embed = new Discord.RichEmbed()
+
+              .setTitle('Moderator Action: Mute.')
+              //.addField('\u200b', '\u200b', true)
+              .setColor(0xff7700)
+              .setTimestamp()
+              .addField('User', (`${member.user.tag}`), true)
+              .addField('Time muted', (`${time / 60000} minutes.`), true)
+              .addField('Reason', (reason), true)
+              .addField('Moderator Responsible', (`${m.author.tag}`), true);
+
+              bot.channels.get('313005765184978954').send({embed});
+              try{
+              setTimeout(function(){
+                m.guild.fetchMember(id).then((member) => {
+                  m.guild.roles.filter( role => {
+                    if(role.name == "Muted"){
+                      member.removeRole(role).then(() => console.log('done'));
+                    }});
+              });
+            }, time);
+          } catch (e) {
+            console.log(e);
+          }
+          });
+        }
+      });
+    });
+  },
+
+ '!allrep' : (m) => {
+  var _flag = false;
+   m.member.roles.filter( (role) => {
+     console.log(role.name);
+     if(role.name == "Staff member"){
+       _flag = true;
+     }});
+   if (_flag == false) return m.channel.send("Staff Commands are limited to Staffs only.");
+
+   let user = m.mentions.users.first();
+   if (!user) return m.channel.send("Please specify the target user by a mention.");
+   let id = user.id;
+
+   var dir = (`./users/${user.id}.json`);
+   var file = require(dir);
+   var array = file.feedback.slice(5);
+   var content = (`
+Username : ${user.tag}\n
+Total Positive Reputation: ${file.plus}\n
+Total Negative Reputation: ${file.minus}\n
+Feedbacks:\n
+  ${array.join("\n\t")}
+`);
+
+  fs.writeFile('./log.txt', content, (err) => {
+    if (err) throw err;
+  });
+
+  m.author.send({
+    files: ["./log.txt"]
+  });
+},
+  "/allinvites" : (msg, lang, bot) => {
+    var _flag = false;
+      msg.member.roles.filter( (role) => {
+      console.log(role.name);
+      if(role.name == "Staff member"){
+        _flag = true;
+      }});
+      if (_flag == false) return msg.channel.send("Staff Commands are limited to Staffs only.");
+
+    console.log("1");
+     bot.guilds.get('297408095137562625').fetchInvites().then((invites) => {
+      let keyArr = invites.array();
+      var Arr = [], sendArr = [];
+      for (let i = 0; i < keyArr.length; i++){
+        if (keyArr[i].channel.id != 335085483325652993) continue;
+        Arr.push({
+          creator: keyArr[i].inviter.tag,
+          code: keyArr[i].code,
+          uses: keyArr[i].uses
+        });
+        console.log(Arr[i].uses);
+      }
+      console.log(Arr);
+      bubbleSort(Arr);
+      for (let i = 0; i < Arr.length; i++){
+        sendArr.push(`${Arr[i].creator} ; ${Arr[i].code} : ${Arr[i].uses} uses`);
+      }
+      console.log(Arr);
+      fs.writeFile('./allinv.txt', sendArr.join("\n"), (err) => {
+        if (err) console.log(err);
+      });      
+    });
+  msg.author.send({
+    files: ['./allinv.txt']
+  });  
+  },
+  "/invitecount" : (msg, lang, bot) => {
+    let inv = msg.content.split(" ").slice(1)[0];
+    if (!inv) return;
+    inv = inv.split("https://discord.gg/")[1];
+    bot.guilds.get('297408095137562625').fetchInvites().then((invites) => {
+      let keyArr = invites.array();
+      var Arr = [], sendArr = [];
+      for (let i = 0; i < keyArr.length; i++){
+        
+        if (keyArr[i].code != inv) continue;
+        if (keyArr[i].channel.id != 335085483325652993) return msg.channel.send("This invite doesn't link to the <#335085483325652993> channel. Thus, it's invalid");
+        
+        console.log(keyArr[i].uses);
+        
+        Arr.push({
+          creator: keyArr[i].inviter.tag,
+          code: keyArr[i].code,
+          uses: keyArr[i].uses
+        });
+        console.log(Arr[0].uses);
+      
+        sendArr.push(`This invite from **${Arr[0].creator}** currently has **${Arr[0].uses}** uses`);
+      }
+      msg.channel.send(sendArr[0]);
+      });          
+  },
+    "/r" : (msg) => {
+    let result = [];
+    let arr = msg.content.split(" ").slice(1)[0];
+    if (!arr) return msg.channel.send("There is no input!");
+    else {
+      if (arr.includes('d')) {
+        let array = arr.split("d");
+        let n1 = array[0],
+        n2 = array[1];
+        var res = 0;
+
+        if (!isInt(n1) || !isInt(n2)) return msg.channel.send("This roll is impossible!");
+
+        for (let i = 0; i < n1; i++){
+          let q = randomInt(1,n2);
+          result.push(q);
+          res = res + q;
+        }
+      } else {
+        let q = randomInt(1,arr);
+        result.push(q);
+        res = q;
+      }
+      msg.channel.send(`Rolled: [**${result.join(", ")}**] Total: [**${res}**]`);
+    }
+  }
+};
+bot.on('ready', () => {
+  console.log("READY!");
 });
-    fs.writeFile(bdname, JSON.stringify(bd, null, 2), (err) => {
+bot.on('message', (msg) => {
+  if (msg.guild.id != '297408095137562625') return;
+  // Gets message content, split it, then take in the first keyword and checks if it's valid.
+  if (commands.hasOwnProperty(msg.content.split(" ")[0])) return commands[msg.content.split(" ")[0]](msg, bot, bot);
+});
+bot.on('guildMemberAdd', (member) => {
+  var p = ".";
+    var data = {
+      "name" : (`${member.user.username}`),
+      "plus" : 0,
+      "minus" : 0,
+      "feedback" : [p,p,p,p,p],
+      "last" : []
+    };
+    fs.writeFile((`./users/${member.id}.json`), JSON.stringify(data, null, 2), (err) => {
       if (err) throw err;
-      console.log(JSON.stringify(bd, null, 2));
-      msg.channel.send("Added!");
+      console.log(JSON.stringify(data, null, 2));
     });
-  }else if (args[0] == 'check'){
-    var arr = [];
-    var arr2 = [], arr3 = [];
-    let date = new Date();
-    let day = getDayAmount(date.getUTCDate(),date.getUTCMonth(),date.getUTCFullYear());
-    bd = require(bdname);
-    for (let key in bd){
-      if (bd.hasOwnProperty(key)){
-        let userday = getDayAmount(parseInt(bd[key]['day']), parseInt(bd[key]['month'])-1, date.getUTCFullYear());
-        console.log(bd[key]['name'] + " : " + userday + "\n");
-        if (userday - day <= 7 && userday - day > 0) arr.push(`'${bd[key]['name']}'s birthday will arrive in ${Math.abs(userday - day)} days.`);
-        if (userday - day >= -7 && userday - day < 0) arr3.push(`'${bd[key]['name']}'s birthday has already passed for ${Math.abs(userday - day)} days.`);
-        if (userday - day === 0) arr2.push(`Today is '${bd[key]['name']}'s birthday.`);
-    }
-  }
-  let hour = date.getUTCHours();
-  hour = (date.getUTCHours() < 10) ? (`0${hour}`) : hour;
-  let min = date.getUTCMinutes();
-  min = (date.getUTCMinutes() < 10) ? (`0${min}`) : min;
-  day = date.getUTCDate();
-msg.channel.send("\`\`\`xl\n" + arr2.join("\n") + "\n\n" + arr.join("\n") + "\n\n" + arr3.join("\n") + "\n\n" + "The current UTC time is: " + (`${day}\/${month}, ${hour}\:${min}`) + "\`\`\`");
-}
-},
-'r' : (msg) => {
-
-  var _getFileAmount = function(dir) {
-
-    var filesystem = require("fs");
-    // var results = [];
-    var results = 0;
-    filesystem.readdirSync(dir).forEach(function(file) {
-      results++;
-        /*file = dir+'/'+file;
-        var stat = filesystem.statSync(file);
-
-        if (stat && stat.isDirectory()) {
-            results = results.concat(_getAllFilesFromFolder(file));
-        } else results.push(file);*/
-
-    });
-
-    return results;
-
-};
-  let tags = ['nope','lol'];
-  let arr = msg.content.split(" ").slice(1).join(" ").toLowerCase(),
-  r = undefined;
-  if (!arr) return msg.channel.send("Want a reaction image this instant? Try this command followed by a tag. Refer to the [/r _tag] commands for all tags.");
-  switch (arr){
-    case 'nope':
-    case 'lol':
-    //case 'delete':
-    r = arr;
-    break;
-    case '_tag':
-    return msg.channel.send(`Here are the current tags available :
-    \`\`\`diff
-+ ${tags.join("\n+ ")}\`\`\``);
-    default:
-    break;
-  }
-  if (!r) return msg.channel.send(`There are no such images with the \`${arr}\` tag. Refer to the command \`/r _tag\` for a list of tags available.`);
-  let i = randomInt(0,_getFileAmount("./reactions/" + r) - 1);
-  console.log(_getFileAmount("./reactions/" + r) - 1);
-  console.log(i);
-  try {
-  msg.channel.sendFile("./reactions/" + r + "/" + i + ".jpg");
-} catch (e) {
-  console.err(e);
-}
-},
-'numbergame' : (msg) => {
-  let arr = msg.content.toLowerCase().split(" ").slice(1);
-  let max;
-	let extremeflag = false;
-	let hardtwist = (randomInt(1,5) < 3) ? true : false;
-  if (arr[0]) switch (arr[0]){
-    case 'easy':
-    case 'e':
-    max = 100;
-    break;
-    case 'normal':
-    case 'n':
-    max = 250;
-    break;
-    case 'hard':
-    case 'h':
-    max = 400;
-    break;
-    case 'lunatic':
-    case 'l':
-    max = 600;
-    break;
-    case 'extra':
-    case 'x':
-    max = 1000;
-	
-    break;
-	  case 'phantasm':
-	  case 'ph':
-		  max = 5000;
-		  break;
-	case 'abex':
-		  max = 10000;
-		  extremeflag = true;
-		  break;
-	case 'abex00':
-		  max = 50000;
-		  extremeflag = true;
-		  break;
-  } else return msg.channel.send("Please type /numbergame followed by either of these difficulties! [easy, normal, hard, lunatic, extra, ???].");
-  let num = randomInt(1, max);
-  console.log(num);
-  let collector = msg.channel.createCollector(m => m);
-  
-  let win = false,
-  amount = 0;
-	max = (extremeflag) ? 12 : 8;
-	if (hardtwist) max = max - 3;
-	msg.channel.send("You have " + max + " chances! Guess the number correctly and you win!");
-  collector.on('collect' , ((m) => {
-    let msg = m.content.trim();
-    let arr = msg.split(" ")[0];
-    if (!isInt(arr)) return;
-    if (amount < max){
-    if (arr > num) {
-      amount++;
-      m.channel.send("That's too high! Try again!");
-    } else if (arr < num) {
-      amount++;
-      m.channel.send("That's too low! Try again!");
-    } else if (arr == num) {
-      m.channel.send("Correct! You win!");
-      collector.stop();
-    }
-  }
-  if (amount === max) {
-    collector.stop();
-    m.channel.send("That's too bad! The number was " + num);
-  }
-}));
-}
-};
-
-
-bot.on("message", msg => {
-
-  //if (msg.channel.type != 'text') return;
-  // if (msg.author.id != '197733648403791872') return msg.channel.send("Maintenance in progress!");
-  // if (msg.author.id === 188698737785307145) return msg.channel.send("Error: Usage blocked.");
-  if(!msg.content.startsWith(prefix)) return;
-  if (msg.channel.id == tokens.speak) console.log(`${msg.author.username} : ${msg.content}`);
-  if (commands.hasOwnProperty(msg.content.toLowerCase().slice(tokens.prefix.length).split(' ')[0])) commands[msg.content.toLowerCase().slice(tokens.prefix.length).split(' ')[0]](msg);
-
+  //  bot.channels.get("297408095137562625").send(`${member}, your data have been saved. Welcome!`);
 });
-bot.login("MjY4NzgwODQ1OTg3Mzk3NjQy.C1fxMA.wRDQDEGSFBLRvALnelqnZszg2PU");
 
+function showData(msg, user, type){
+  var dir = (`./users/${user.id}.json`);
+  var file = require(dir);
+  var color;
+  var perc = round((file["plus"] / (file["plus"] + file["minus"])) * 100, 2);
+  if (type == "minus") color = 0xFF0000;
+  if (type == "plus") color = 0x00FF00;
+  if (type == "check") color = 0x0000FF;
+  var embed = new Discord.RichEmbed()
+
+  .setTitle('Showing data.')
+  .setThumbnail(user.avatarURL)
+  .setColor(color)
+  .setTimestamp()
+  // array - x = 5
+  // [g]
+  .addField('User', (`${user.username}#${user.discriminator}`))
+  .addField('Feedback', (`\`\`\`xl
+\"${file.feedback.slice((file.feedback.length <= 10) ? 5 : 5 + ((file.feedback.length - 5) - 5)).join("\"\n\"")}\"
+\`\`\``))
+  .addField('Point Count', (`+${file["plus"]} : -${file["minus"]}`))
+  .addField('Percentage', (`${perc}%`), true);
+//slice((file.feedback.length <= 5) ? 0 : file.feedback.length - 5)
+// Current array length: 6. n - x = 5
+  msg.channel.send({
+    embed
+  });
+}
+function round(value, decimals) {
+  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+}
 function isInt(value) {
   return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value));
-}
-function randomInt(low, high) {
-    return Math.round(Math.random() * (high - low) + low);
-}
-function sort (arr){
-for (let i = (arr.length - 1); i >= 0; i--){
-  for (let j = 1; j <= i; j++){
-    if (arr[j-1]['day'] > arr[j]['day'])
-         {
-              let temp = arr[j-1];
-              arr[j-1] = arr[j];
-              arr[j] = temp;
-  }
-}
-}
-}
-function list (obj, arr){
-  for (let key in obj){
-    if (obj.hasOwnProperty(key)){
-    console.log(key);
-    arr.push(obj[key]);
-    }
-  }
-  sort(arr);
-  //resort(arr);
-for (let i = 0; i<arr.length; i++){
-  console.log(arr[i]['name'] + " " + arr[i]['day']);
-}
-}
-function checkLeapYear(year){
-  let ret;
-  if ((year % 4 === 0)&&(year % 100 !== 0) || (year % 400 === 0)) ret = true;
-  else ret = false;
-  return ret;
-}
-function getDayAmount(day, month, year){
-  let array = [0,31,59,90,120,151,181,212,243,273,304,334];
-  day = array[month] + day;
-  if ((checkLeapYear(year) === true) && ((month + 1) > 2)) day + 1;
-  return day;
 }
