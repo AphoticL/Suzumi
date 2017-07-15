@@ -136,7 +136,7 @@ wolfram : (msg, lang) => {
             f.push(i);
             ///console.log(files);
         }
-        bubbleSort(f);
+        //bubbleSort(f);
         console.log(f);
         for (let i = 0; i < f.length; i++){
             files.push(`pics/${i}.jpg`);
