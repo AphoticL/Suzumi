@@ -894,8 +894,13 @@ msg.channel.send("\`\`\`xl\n" + arr2.join("\n") + "\n\n" + arr.join("\n") + "\n\
     case 'extra':
     case 'x':
     max = 1000;
+	
     break;
-  } else return msg.channel.send("Please type /numbergame followed by either of these difficulties! [easy, normal, hard, lunatic, extra].");
+	  case 'phantasm':
+	  case 'ph':
+		  max = 5000;
+		  break;
+  } else return msg.channel.send("Please type /numbergame followed by either of these difficulties! [easy, normal, hard, lunatic, extra, ???].");
   let num = randomInt(1, max);
   console.log(num);
   let collector = msg.channel.createCollector(m => m);
@@ -918,7 +923,7 @@ msg.channel.send("\`\`\`xl\n" + arr2.join("\n") + "\n\n" + arr.join("\n") + "\n\
       collector.stop();
     }
   }
-  if (amount === 5) {
+  if (amount === 8) {
     collector.stop();
     m.channel.send("That's too bad! The number was " + num);
   }
