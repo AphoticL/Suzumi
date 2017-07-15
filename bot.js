@@ -899,14 +899,14 @@ msg.channel.send("\`\`\`xl\n" + arr2.join("\n") + "\n\n" + arr.join("\n") + "\n\
   let num = randomInt(1, max);
   console.log(num);
   let collector = msg.channel.createCollector(m => m);
-  msg.channel.send("You have 5 chances! Guess the number correctly and you win!");
+  msg.channel.send("You have 8 chances! Guess the number correctly and you win!");
   let win = false,
   amount = 0;
   collector.on('collect' , ((m) => {
     let msg = m.content.trim();
     let arr = msg.split(" ")[0];
     if (!isInt(arr)) return;
-    if (amount < 5){
+    if (amount < 8){
     if (arr > num) {
       amount++;
       m.channel.send("That's too high! Try again!");
