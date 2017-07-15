@@ -127,20 +127,26 @@ wolfram : (msg, lang) => {
     let wolfram = require('wolfram').createClient('H6QA6L-WJ75WJ8VHE');
     let q = msg.content.split(" ").slice(1).join(" ");
     const http = require('http');
-    let files = [];
+    let f = [],
+    files = [];
     wolfram.query(q, (err, result) => {
         if (err) return console.log(err);        
         for (var i in result){
             download(result[i].subpods[0].image, `pics/${i}.jpg`);
-            files.push(`pics/${i}.jpg`);
-            console.log(files);
+            f.push(i);
+            ///console.log(files);
         }
-    });
-    setTimeout(function() {
-        msg.channel.send({files});
-    }, 5000);
-    
-    },
+        bubbleSort(f);
+        console.log(f);
+        for (let i = 0; i < f.length; i++){
+            files.push(`pics/${i}.jpg`);
+        }
+        console.log(files);
+          setTimeout(() => {
+            msg.channel.send({files});
+          }, 2000);
+    });     
+ },
 "rs": (msg) => {
   exec('cd C:\\Users\\Administrator\\Documents\\GitHub\\Suzumi', (error, stdout, stderr) => {
   if (error) {
