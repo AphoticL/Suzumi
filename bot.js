@@ -104,102 +104,14 @@ bot.on('ready', () =>{
 });
 //var end;
 // COMMANDS
-const commands = {"ping": (msg) => {
+const commands = {
+  "ping": (msg) => {
    var start = new Date();
   msg.channel.send(`Pong.`);
  var end = new Date() - start;
   msg.channel.send(`\`Took: ${end}ms\``);
 },
-wolfram : (msg, lang) => {
-    var download = function(url, dest, cb) {
-    var file = fs.createWriteStream(dest);
-    var request = http.get(url, function(response) {
-         response.pipe(file);
-         file.on('finish', function() {
-         file.close(cb);  // close() is async, call cb after close completes.
-    });
-  }).on('error', function(err) { // Handle errors
-    fs.unlink(dest); // Delete the file async. (But we don't check the result)
-    if (cb) cb(err.message);
-  });
-};
 
-    let wolfram = require('wolfram').createClient('H6QA6L-WJ75WJ8VHE');
-    let q = msg.content.split(" ").slice(1).join(" ");
-    const http = require('http');
-    let f = [],
-    files = [];
-    wolfram.query(q, (err, result) => {
-        if (err) return console.log(err);        
-        for (var i in result){
-            download(result[i].subpods[0].image, `pics/${i}.jpg`);
-            f.push(i);
-            ///console.log(files);
-        }
-        //bubbleSort(f);
-        console.log(f);
-        for (let i = 0; i < f.length; i++){
-            files.push(`pics/${i}.jpg`);
-        }
-        console.log(files);
-          setTimeout(() => {
-            msg.channel.send({files});
-          }, 2000);
-    });     
- },
-"rs": (msg) => {
-  exec('cd C:\\Users\\Administrator\\Documents\\GitHub\\Suzumi', (error, stdout, stderr) => {
-  if (error) {
-    console.error(`exec error: ${error}`);
-    return;
-  }
-  console.log(`stdout: ${stdout}`);
-  console.log(`stderr: ${stderr}`);
-});
-  exec('forever restartall', (error, stdout, stderr) => {
-  if (error) {
-    console.error(`exec error: ${error}`);
-    return;
-  }
-  console.log(`stdout: ${stdout}`);
-  console.log(`stderr: ${stderr}`);
-});
-exec('pause', (error, stdout, stderr) => {
-if (error) {
-  console.error(`exec error: ${error}`);
-  return;
-}
-console.log(`stdout: ${stdout}`);
-console.log(`stderr: ${stderr}`);
-});
-},
-"stopall": (msg) => {
-  if (msg.author.id != '197733648403791872') return msg.channel.send("Forbidden.");
-  exec('cd C:\\Users\\Administrator\\Documents\\GitHub\\Suzumi', (error, stdout, stderr) => {
-  if (error) {
-    console.error(`exec error: ${error}`);
-    return;
-  }
-  console.log(`stdout: ${stdout}`);
-  console.log(`stderr: ${stderr}`);
-});
-  exec('forever stopall', (error, stdout, stderr) => {
-  if (error) {
-    console.error(`exec error: ${error}`);
-    return;
-  }
-  console.log(`stdout: ${stdout}`);
-  console.log(`stderr: ${stderr}`);
-});
-exec('pause', (error, stdout, stderr) => {
-if (error) {
-  console.error(`exec error: ${error}`);
-  return;
-}
-console.log(`stdout: ${stdout}`);
-console.log(`stderr: ${stderr}`);
-});
-},
   "play": (msg) => {
     if (msg.author == bot.user) return;
   if (queue[msg.guild.id] === undefined) return msg.channel.send(`Add some songs to the queue first with ${tokens.prefix}add`);
