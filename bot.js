@@ -854,6 +854,45 @@ msg.channel.send("\`\`\`xl\n" + arr2.join("\n") + "\n\n" + arr.join("\n") + "\n\
     m.channel.send("That's too bad! The number was " + num);
   }
 }));
+},
+wolfram : (msg, lang) => {
+  var download = function(url, dest, cb) {
+  var file = fs.createWriteStream(dest)
+  var request = http.get(url, function(response) {
+       response.pipe(file)
+       file.on('finish', function() {
+       file.close(cb)  // close() is async, call cb after close completes.
+  })
+}).on('error', function(err) { // Handle errors
+  fs.unlink(dest) // Delete the file async. (But we don't check the result)
+  if (cb) cb(err.message)
+})
+}
+
+  let wolfram = require('wolfram').createClient('H6QA6L-WJ75WJ8VHE')
+  let q = msg.content.split(" ").slice(1).join(" ")
+  const http = require('http')
+  let f = [],
+  files = []
+  wolfram.query(q, (err, result) => {
+      if (err) return console.log(err) 
+         
+      for (var i in result){
+          download(result[i].subpods[0].image, `pics/${i}.jpg`)
+          f.push(i)
+          ///console.log(files)
+      }
+      if (f.length < 1) return msg.channel.send(lang.wolfram.notfound)
+      bubbleSort(f)
+      console.log(f)
+      for (let i = 0; i < f.length; i++){
+          files.push(`pics/${i}.jpg`)
+      }
+      console.log(files)
+        setTimeout(() => {
+          msg.channel.send({files})
+        }, 3000)
+  })
 }
 };
 
