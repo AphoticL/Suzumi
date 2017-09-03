@@ -907,7 +907,7 @@ bot.on("message", msg => {
   if (commands.hasOwnProperty(msg.content.toLowerCase().slice(tokens.prefix.length).split(' ')[0])) commands[msg.content.toLowerCase().slice(tokens.prefix.length).split(' ')[0]](msg);
 
 });
-bot.login("MjY4NzgwODQ1OTg3Mzk3NjQy.C1fxMA.wRDQDEGSFBLRvALnelqnZszg2PU");
+bot.login("MjY4NzgwODQ1OTg3Mzk3NjQy.DI0W2A.4i009PHd9MKlB95_fCE1udt18ow");
 
 function isInt(value) {
   return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value));
