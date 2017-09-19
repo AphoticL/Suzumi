@@ -410,35 +410,29 @@ ${colstr}
 }
 },
 
-'d' : (msg) => {
-  let args = msg.content.split(" ").slice(1);
-  let d = args[0];
-  let check = isInt(d);
-  let ins = ["Is that \*\*really\*\* a \*\*\*REAL\*\*\* number?", "How am I supposed to do that!? B-Baka...",  "Having fun?", "Totally doable.", "Legit 100\%", "I'll stab you if you do it again, I swear."];
-  if (d == null){
-    msg.channel.send("Feelin' lucky? Type /d followed by a number and see what happens.");
-  } else {
-    if (check === true){
-  let num = randomInt(1, d);
-  let per = Math.floor((num / d) * 100);
-  let lo = ["Xeno a? What have you done?!", "Bless RNG.", "Pathetic.", "Xeno a, stop messing with it!"];
-  if (per > 30){
-
-  msg.channel.send("You rolled a " + num + ". How was it?");
-} else if (per <= 30 ) {
-  msg.channel.send("You rolled a " + num + ". Uh...");
-  setTimeout(function(){
-    let num = Math.round(Math.random() * (lo.length - 1) + 1);
-    msg.channel.send(lo[num]);
-  }, 2000);
-}
-} else if (d != "Xeno") {
-  let num = randomInt(1,ins.length);
-  msg.channel.send(ins[num]);
-} else if ((d.toLowerCase() == "xeno") && ((args[1] == "a") || args[1] == "A")){
-  msg.channel.send("Calling out to the god of RNG themselves isn't going to give you any good.");
-}
-}
+'r' : (msg) => {
+  let res = 0
+    let roll = msg.content.split(" ")[1]
+    if (!roll) return msg.channel.send('There\'s no input.')
+    if (/d/gi.test(roll)){
+      if (/[0-9]+d[0-9]+/gi.test(roll)){
+        let arr = roll.split("d")
+        let ar = []
+        for (let i = 0; i < arr[0]; i++) {
+          let temp = randomInt(1, arr[1])
+          res = res + temp
+          ar.push(temp)
+        }
+        msg.channel.send(`Random: [**${ar.join(", ")}**] = **${res}**`)
+      } else {
+        msg.channel.send(lang.dice.impossible)
+      }
+    } else if (/[0-9]+/.test(roll)) {
+      res = randomInt(1, roll)
+      msg.channel.send(`Rolled: **${res}**`)
+    } else {
+      msg.channel.send("That dice roll is impossible; must be in n or xdy format.")
+    }
 },
 'eval' : (msg) => {
   var col,
